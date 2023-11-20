@@ -41,10 +41,10 @@ Jessica created the repo, added the team, and got the Use Case Diagram done. She
 
 
 ## 11/20/2023 12:45 pm-1:00 pm
-Participants:  
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
 
 Notes...
-
+Jacqueline added a scrum file and updated the readme with the template provided by Dr. Mota
 
 ## 
 Participants: 
