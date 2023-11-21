@@ -31,12 +31,12 @@ def load_user(id):
     except: 
         return None
     
-# cache setup
-from flask_caching import Cache
-cache = Cache()
-cache.init_app(app, config={
-    'CACHE_TYPE': 'simple',
-    'CACHE_DEFAULT_TIMEOUT': 300
-})
+# cache setup in case we use cache
+# from flask_caching import Cache
+# cache = Cache()
+# cache.init_app(app, config={
+#     'CACHE_TYPE': 'simple',
+#     'CACHE_DEFAULT_TIMEOUT': 300
+# })
 
 from app import routes
