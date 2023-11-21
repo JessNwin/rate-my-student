@@ -46,7 +46,7 @@ Additional Information:
 Additional information: 
 * Flagged review will be added to the Admin list of flagged reports. *
 
-###6 US#5 
+### US#5 
 
 *As a professor, I can recommend a student for academic opportunities. I can access a list of  5 students with the highest reviews from my home page to gain insight into potential candidates. I can access a list of users from a directory. When I select a user, I can click the "recommend" button. Upon recommendation, the student recommendation list will be updated, and a message will be sent to the student. Students will have the ability to access messages from their home page.*
 
@@ -65,6 +65,10 @@ At a minimum, this section should have a class diagram that succinctly describes
 ### Class Diagram
 
 ![](images/umlClassDiagram.png)
+
+### Sequence Diagram
+
+![](images/sequenceDiagram.png)
 
 # Development Process 
 
