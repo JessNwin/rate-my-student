@@ -1,0 +1,98 @@
+@startuml
+!theme cerulean-outline
+left to right direction
+actor user as U
+package Authorized_user {
+  actor "Professor" as pr
+  skinparam actorStyle Hollow
+  actor "Student" as st
+  skinparam actorStyle awesome
+  actor "Admin" as ad
+}
+package System {
+  usecase "Sign-up" as UC1
+  note "choose Professor/Student" as n1
+  usecase "check unique entry" as UC8
+  usecase "Accept Registration" as UC9
+  usecase "Deny Registration" as UC10
+  usecase "Notify user" as UC11
+  UC1 .. n1
+  n1 .. UC8
+  UC8 .. UC9
+  UC8 .. UC10
+  UC10 .. UC11
+  UC11 .> U #line:red;line.bold;text:red
+
+  usecase "Login" as UC2
+  note "attempt log in" as n2
+  usecase "authenticate" as UC12 
+  usecase "Allow access" as UC13
+  usecase "failed login" as UC14
+  usecase "Notify user" as UC15
+  UC2 .. n2
+  n2 .. UC12
+  UC12 .. UC13
+  UC12 .. UC14
+  UC14 .. UC15
+  UC15 .> U #line:red;line.bold;text:red
+  
+  usecase "Search user" as UC3
+  note "extends to" as n3
+  usecase "Access directory" as UC16
+  note "extends to" as n4
+  usecase "Report/Review" as UC17
+  UC3 .. n3
+  n3 ..UC16
+  UC16 .. n4
+  n4 .. UC17
+  
+  usecase "Review" as UC4
+  note "extends to" as n5
+  usecase "Calculate average" as UC18
+  note "includes" as n6
+  usecase "update review list" as UC19
+  UC4 .. n5
+  n5 .. UC18
+  UC18 .. n6
+  n6 .. UC19
+  
+  usecase "Report Review" as UC5
+  note "Extends to" as n7
+  usecase "update admin flagged list" as UC20
+  UC5 ..n7
+  n7 .. UC20
+  
+  usecase "Make Recomendations" as UC6
+  note "Incldues" as n8
+  usecase "update Students list" as UC21
+  UC6 .. n8
+  n8 .. UC21
+  
+  usecase "Modify Flagged Reviews" as UC7
+  note "check status" as n9
+  usecase "delete review" as UC22
+  usecase "revise review" as UC23
+  UC7 ..n9
+  n9 ..UC22
+  n9 ..UC23
+  
+  usecase "logout" as UC24
+}
+
+U --> UC1
+U --> UC2
+
+st --> UC3
+st --> UC4
+st --> UC5
+st --> UC24
+
+pr -->UC3 #green;line.dashed;text:green
+pr --> UC4 #green;line.dashed;text:green
+pr --> UC5 #green;line.dashed;text:green
+pr --> UC6 #green;line.dashed;text:green
+pr --> UC24 #green;line.dashed;text:green
+
+ad --> UC7
+ad --> UC24
+@enduml

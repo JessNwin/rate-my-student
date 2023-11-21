@@ -1,0 +1,84 @@
+@startuml
+!theme carbon-gray
+left to right direction
+
+title Rate My Student - Class Diagram
+
+
+class Rate_my_Student {
+  +addStudent()
+  +addProfessor()
+  +addAdmin()
+}
+
+interface Users {
+  -userID: int
+  -username: string
+  -password: string
+  -userType: string
+  -bio: string
+  +verify_login(): bool
+
+}
+class Student {
+  -major: string
+  +getMajor()
+  +setMajor()
+  +getReviewsByOthers()
+  +getReviewsByMe()
+  +getOverallAvg()
+  +getMessages()
+  +getListofReviews()
+  +getUsers()
+  
+}
+class Professor {
+  -department: string
+  +getTopFiveRated()
+  +getReviewsByMe()
+  
+}
+class Admin {
+  +getFlaggedReviews()
+  +getUsers()
+
+}
+class Rating {
+  +studentID: int
+  +studentName:int
+  +overallAverage; float
+  +overallMasteryAverage:float
+  +verallTeamworkAvereage:float
+  +verallParticipationAverage:float
+  +getListOfReview():return
+  +calculateOverallAverage(): return
+  +calculateMasteryAverage(): return
+  +calculateParticipationAverage() :return
+  
+}
+class Review {
+  +reviewNumber: int
+  +comment: string
+  +masteryRating: int
+  +teamworkRating: int
+  +ParticipationRating: int
+  +getMasteryRating(): return
+  +getTeamworkRating(): return
+  +getParticipation():return
+  +getComment(): return
+  
+}
+
+
+Admin "one" o--> "many" Review
+Professor "one" o--> "many" Review
+Student "one" o--> "many" Review 
+Review "many" *--> "one" Rating
+Rating "one" o--> "one" Professor
+Rating "one" o--> "one" Student
+Admin "many" *--> "one" Users
+Professor "many" *--> "one" Users
+Student "many" *--> "one" Users
+Rate_my_Student <--o Users
+
+@enduml

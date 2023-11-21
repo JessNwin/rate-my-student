@@ -62,6 +62,10 @@ At a minimum, this section should have a class diagram that succinctly describes
 
 ![](images/useCaseDiagram.png)
 
+### Class Diagram
+
+![](images/umlClassDiagram.png)
+
 # Development Process 
 
 This section should be used to describe how the scrum methodology was used in this project. As a suggestion, include the following table to summarize how the sprints occurred during the development of this project.
