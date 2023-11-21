@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Page</title>
+    <style> 
+        /* TODO: Replace the style with CSS,
+            figure out how to style search suggestions */
+        #search-bar-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #search-input {
+            width: 50%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+
+        #search-button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="search-bar-container">
+        <form action="/search" method="get">
+            <input type="text" id="search-input" name="query" placeholder="Enter search term...">
+            <button type="submit" id="search-button">Search</button>
+        </form>
+        <div id="suggestions-container"></div>
+    </div>
+    
+
+    <script>
+        document.getElementById('search-input').addEventListener('input', function() {
+    var searchQuery = this.value;
+
+    fetch('/search-suggestions?q=' + encodeURIComponent(searchQuery))
+        .then(response => response.json())
+        .then(suggestions => {
+            var suggestionsContainer = document.getElementById('suggestions-container');
+            suggestionsContainer.innerHTML = '';
+
+            suggestions.forEach(function(suggestion) {
+                var div = document.createElement('div');
+                div.innerText = suggestion;
+                div.addEventListener('click', function() {
+                    document.getElementById('search-input').value = suggestion;
+                    suggestionsContainer.innerHTML = '';
+                });
+                suggestionsContainer.appendChild(div);
+            });
+        });
+    });
+    </script>
+</body>
+</html>
