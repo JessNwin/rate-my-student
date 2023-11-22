@@ -68,7 +68,7 @@ At a minimum, this section should have a class diagram that succinctly describes
 
 ### Sequence Diagram
 
-![](images/sequenceDiagram.png)
+![](images/sequenceDiagramUS2.png)
 
 # Development Process 
 
