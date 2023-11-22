@@ -46,49 +46,39 @@ Participants: Jessica, Jacqueline, Ben, Vincent, Luis
 Notes...
 Jacqueline added a scrum file and updated the readme with the template provided by Dr. Mota
 
-## 
-Participants: 
+## 11/21/2023 8:00-0:15 am 
+Participants: Jessica, Jacqueline, Ben, Vincent Luis
 
 Notes...
-
-
-## 
-Participants:  
-
-Notes...
-
-
-## 
-Participants: 
-
-Notes...
+Vincent completed US#1 and US#2. Jessica completed the rest of the US descriptions and all required UML diagrams. All changes commited and pushed.
 
 
 # Sprint Review
 
-Date/Time: 
+Date/Time: 11/22/2023 9:45-10:00 am 
 
-Participants:  
+Participants: Jessica, Jacqueline, Ben, Luis
 
 Notes...
-
+The sprint went well. We completed our goal and the team kept in communication throughout the sprint. 
 
 # Sprint Retrospective
 
-Date/Time: 
+Date/Time: 10:00-10:15 am 
 
-Participants: 
+Participants: Jessica, Jacqueline, Ben, Luis
 
 Notes...
+The team agrees that we are working well together and communicating regularly. We are going to continue this collaboration for our next sprint 
 
 
 # Sprint Planning
 
-Date/Time: 
+Date/Time: 10:15 am - 10:30 am 
 
-Participants: 
+Participants: Jessica, Jacqueline, Ben, Luis
 
-Goal Statement:  
+Goal Statement: To complete US#3 and familarize ourselves with testing. Jacqueline and Ben will beging coding for US#3. Jessica and Luis will research previous implementations of a ratings program. Ben is going to dive deeper into selenium for when testing time comes. Jacqueline, Luis and Jessica will also revisit Activity 19 to get familiar with testing. Vincent will assist with coding as needed once implementation of US#3 is underway. 
 
 # Daily Scrums
 
