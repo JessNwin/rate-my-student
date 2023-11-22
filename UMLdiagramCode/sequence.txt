@@ -1,66 +1,32 @@
 @startuml
-!theme plain
+
+@startuml
+!theme blueprint
 
 participant User as U
 entity Rate_my_Student as WS
-entity Web_API as WB
 database Database as DB
 
-U --> WS : Click on Sign up
-WS <-- WB :return sign up form
-U <-- WS: Display form to fill
-U --> WS : Click submit
 
-alt Signup_success
-  WS --> WB : Check if unique
-  WB --> DB: Save User information
-  DB --> WB: Create new User
-  
-alt Login_success
-U --> WS : Enter login info and clicks submit
-WS --> WB : Checks if valid
-WB --> DB: compare login details
-DB --> WB: return results
-WB -->WS: display Ratings, Review, and messages
-
-
-
-alt search
-  U -> WS: search User
-  WS --> WB: request access
-  DB --> WB: return directory
-  WB --> WS: return list of users
-  WS -->U : display users
-
-alt review/report
-  U --> WS :selects User to review and click review
-  WS -->WB : redirects to review page
-  WB --> DB: calculate and update Database
-  DB --> WB : return updated statistics
-  WB -->WS : return updated Statistics
-  WS --> U: display new Statistics
-  WS --> U: display new reviews
-
-end  
-else Signup_failure
-U --> WS: enter login info and click submit
-WS--> WB: check if valid
-WB -->DB: compare login details
-DB --> WB: return results
-WB-->WS: deny login
-WS-->U : login failed
-end
-else login_failure
-  WS --> WB:Check if unique
-  WB --> WS: User already exists
-  WS --> U: Send error
-  
-  
-end
-
-
-
-
+U --> WS : Authorized user Request list of names 
+WS --> DB : Request list of all Users
+DB --> WS : retrieves directory 
+WS --> U : Displays names in the directory
+U --> WS : User chooses a User
+WS --> DB : Request profile of particular Users
+DB --> WS : Returns Average Ratings of a selected User 
+DB --> WS : Returns Name of selected student
+DB --> WS : Returns list of reviews for selected User
+U --> WS : Authorized user clicks on review
+WS --> U: Directs to a review form page
+U --> WS: Fills out form and clicks sumbit 
+WS --> DB: Sends Added review to be stored back 
+WS --> DB: Sends New calculated overall average to save
+WS --> DB: Sends New calculated mastery average to save
+WS --> DB: Sends New calculated teamwork average to save
+WS --> DB: Sends New calculated partipation average to save
+DB --> WS: Return success 
+WS --> U : Display review successful notification
 
 
 @enduml
