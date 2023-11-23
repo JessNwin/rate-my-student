@@ -21,15 +21,19 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-from app.models import User
+from app.models import Student, User, Professor
 
 # user_loader callback
 @login_manager.user_loader
 def load_user(id):
-    try: 
-        return db.session.query(User).filter(User.id==id).one()
-    except: 
+    user = User.query.get(id)
+    if user is None:
         return None
+    if user.type == 'student': 
+        return Student.query.get(id)
+    if user.type == 'professor':
+        return Professor.query.get(id)
+    return user
     
 # cache setup in case we use cache
 # from flask_caching import Cache

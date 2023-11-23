@@ -1,12 +1,11 @@
 # TODO: Implement school email verification
 
-
 from app import app, db, load_user
-from app.models import User
+from app.models import User, Student, Professor, Recommendation, Rating
 from app.forms import SignUpForm, SignInForm
 from flask import flash, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
-import bcrypt, uuid
+import bcrypt
 
 @app.route('/')
 @app.route('/index')
@@ -31,10 +30,11 @@ def users_signin():
         if bcrypt.checkpw(userPass, checkUser.password):
             login_user(checkUser)
             print("match")
+            print("CurrentID: " + current_user.id)
+
             return redirect('/users/search')
         else:
             return ('<p>Incorrect Password</p>')
-    print('Some Error')
     return render_template('signin.html', form=signInForm)
 
 # signup functionality
@@ -56,7 +56,8 @@ def users_signup():
             newUser = User(id=signUp.id.data,
                            full_name=signUp.full_name.data,
                            email=signUp.email.data,
-                           password=hashedPass)
+                           password=hashedPass,
+                           type='student')
             db.session.add(newUser)
             db.session.commit()
             return redirect('/users/signin')
@@ -75,17 +76,36 @@ def users_signout():
 # Student/Professor search functionality
 @login_required
 @app.route('/users/search')
-def search_page(): 
+def search_page():
+    print(isinstance(current_user, Student))
     return render_template('search.html')
 
 # Search suggestion logic for main search bar
 @app.route('/search-suggestions')
 def search_suggestions():
+    
     query = request.args.get('q', '')
     if query:
+        # TODO?: Change this to show all students, in CSS make the window show 5 and a scroll bar
         users = User.query.filter(User.full_name.like(f"%{query}%")).limit(10).all()
-        suggestions = [user.full_name for user in users]
+        suggestions = [{'name': user.full_name, 'id': user.id} for user in users]
     else:
         suggestions = []
 
     return jsonify(suggestions)
+
+@login_required
+@app.route('/users/<userid>', methods=['GET', 'POST'])
+def user_profile(userid):
+    print("User ID:", userid)
+    targetUser = User.query.filter_by(id=userid).first()
+    if targetUser.type == 'student':
+        print("Student found:", targetUser.full_name)
+        return render_template('student_profile.html', student=targetUser)
+    elif targetUser.type == 'professor':
+        print("Professor found:", targetUser.full_name)
+        return render_template('professor_profile.html', professor=targetUser)
+    else:
+        print("No user found with ID:", userid)
+        return redirect(url_for('search_page'))
+

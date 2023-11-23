@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block main %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,7 @@
             figure out how to style search suggestions */
         #search-bar-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 20%;
         }
 
         #search-input {
@@ -33,26 +35,26 @@
     
 
     <script>
-        document.getElementById('search-input').addEventListener('input', function() {
-    var searchQuery = this.value;
+    document.getElementById('search-input').addEventListener('input', function() {
+        var searchQuery = this.value;
 
-    fetch('/search-suggestions?q=' + encodeURIComponent(searchQuery))
-        .then(response => response.json())
-        .then(suggestions => {
-            var suggestionsContainer = document.getElementById('suggestions-container');
-            suggestionsContainer.innerHTML = '';
+        fetch('/search-suggestions?q=' + encodeURIComponent(searchQuery))
+            .then(response => response.json())
+            .then(suggestions => {
+                var suggestionsContainer = document.getElementById('suggestions-container');
+                suggestionsContainer.innerHTML = '';
 
-            suggestions.forEach(function(suggestion) {
-                var div = document.createElement('div');
-                div.innerText = suggestion;
-                div.addEventListener('click', function() {
-                    document.getElementById('search-input').value = suggestion;
-                    suggestionsContainer.innerHTML = '';
+                suggestions.forEach(function(suggestion) {
+                    var div = document.createElement('div');
+                    div.innerText = suggestion.name;  // 'name' is a property of the suggestion object
+                    div.addEventListener('click', function() {
+                        window.location.href = '/users/' + suggestion.id;  // 'id' is a property
+                    });
+                    suggestionsContainer.appendChild(div);
                 });
-                suggestionsContainer.appendChild(div);
             });
-        });
     });
     </script>
 </body>
 </html>
+{% endblock %}
