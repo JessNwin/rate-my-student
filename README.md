@@ -32,7 +32,7 @@ Additional information:
 * reviews displayed should only show the comment and review left. Users who left the review should remain anonymous. *
 
 ### US#3 
-*As an authorized user, I can leave a review when I access another user's review page. When the user clicks the "Review" button, the user will be directed to create a review. If the subject being reviewed is a professor, the user will be directed to ratemyprofessor.com. If the review is for a student, the user will be redirected to a form to rate students based on mastery of subject matter, work ethic, collaboration and teamwork, and leave a comment. The user will click the "submit button" when the review is complete. The student being reviewed will update to include the new review made and will display on their profile. Upon submission, individual criteria and overall average will be recalculated and updated.*
+*As an authorized user, I can leave a review when I access another user's review page. When the user clicks the "Review" button, the user will be directed to create a review. If the subject being reviewed is a professor, the user will be directed to ratemyprofessor.com. If the review is for a student, the user will be redirected to a form to rate students based on mastery of subject matter, communication, participation, and leave a comment. The user will click the "submit button" when the review is complete. The student being reviewed will update to include the new review made and will display on their profile. Upon submission, individual criteria and overall average will be recalculated and updated.*
 
 Additional Information: 
 * Students will have a review form. *
@@ -76,7 +76,9 @@ This section should be used to describe how the scrum methodology was used in th
 
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
-|1|US#1, US#2, ...|mm/dd/23|mm/dd/23|US#1|...|
+|1|US#1, US#2|11/16/23|11/16/23|US#1, US#2Nno issues encountered this sprint. Great communication and productivity. Intend to proceed with same course|
+|2|US#3|11/23/23|11/30/23|partial US#3|Communication slowed with fall break and illness in the group. Intending to proceed with frequent communication and intentional planning|
+|3|US#3, US#4, US#5, US#6|11/30/23|mm/dd/23|US#1|...|
 
 Use the observations column to report problems encountered during a sprint and/or to reflect on how the team has continuously improved its work.
 
