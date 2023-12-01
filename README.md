@@ -76,7 +76,7 @@ This section should be used to describe how the scrum methodology was used in th
 
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
-|1|US#1, US#2|11/16/23|11/16/23|US#1, US#2Nno issues encountered this sprint. Great communication and productivity. Intend to proceed with same course|
+|1|US#1, US#2|11/16/23|11/16/23|US#1, US#2|No issues encountered this sprint. Great communication and productivity. Intend to proceed with same course|
 |2|US#3|11/23/23|11/30/23|partial US#3|Communication slowed with fall break and illness in the group. Intending to proceed with frequent communication and intentional planning|
 |3|US#3, US#4, US#5, US#6|11/30/23|mm/dd/23|US#1|...|
 
