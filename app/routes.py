@@ -36,7 +36,6 @@ def users_signin():
         else:
             return ('<p>Incorrect Password</p>')
     return render_template('signin.html', form=signInForm)
-
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_signup():
@@ -148,6 +147,7 @@ def rate_student(student_id):
 
         # Calculate overall rating
         rating_overall = (rating_participation + rating_communication + rating_skill) / 3
+        rating_overall = float("{:.2f}".format(rating_overall))
 
         # Create new Rating object
         new_rating = Rating(

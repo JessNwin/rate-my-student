@@ -18,11 +18,20 @@
 <!-- Display user ratings -->
 {% for rating in student.ratings %}
     <tr class="{{ 'even_row' if loop.index % 2 == 0 else 'odd_row' }}">
-        <td> {{ rating.description }} </td>
+        <td>
+            Overall Rating: 
+            {{ rating.rating_overall }}
+        </td>
+        <br>
+        <td>
+             Description:
+             {{ rating.description }}
+        </td>
         <td>     
             <button type="button">Report</button>
         </td>
     </tr>
+    <p></p>
 {% endfor %}
 
 <!-- Add button to rate this student -->
