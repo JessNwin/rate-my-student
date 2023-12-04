@@ -64,7 +64,7 @@ The sprint went well. We completed our goal and the team kept in communication t
 
 # Sprint Retrospective
 
-Date/Time: 10:00-10:15 am 
+Date/Time: 11/22/2023 10:00-10:15 am 
 
 Participants: Jessica, Jacqueline, Ben, Luis
 
@@ -74,55 +74,76 @@ The team agrees that we are working well together and communicating regularly. W
 
 # Sprint Planning
 
-Date/Time: 10:15 am - 10:30 am 
+Date/Time: 11/22/2023 10:15 am - 10:30 am 
 
 Participants: Jessica, Jacqueline, Ben, Luis
 
-Goal Statement: To complete US#3 and familarize ourselves with testing. Jacqueline and Ben will beging coding for US#3. Jessica and Luis will research previous implementations of a ratings program. Ben is going to dive deeper into selenium for when testing time comes. Jacqueline, Luis and Jessica will also revisit Activity 19 to get familiar with testing. Vincent will assist with coding as needed once implementation of US#3 is underway. 
+Goal Statement: To complete US#3 and familiar ourselves with testing. Vincent will begin coding for US#3. Jessica and Luis will research previous implementations of a ratings program. Ben is going to dive deeper into selenium for when testing time comes. Jacqueline, Luis and Jessica will also revisit Activity 19 to get familiar with testing. Vincent will assist with coding as needed once implementation of US#3 is underway. 
 
 # Daily Scrums
 
-## 
+## 11/23/2023 NO DAILY SCRUM HOLIDAY 
 Participants: 
 
 Notes...
 
-
-## 
-Participants: 
-
-Notes...
-
-
-## 
-Participants:
+## 11/24/2023 8:00 pm - 8:15 pm
+Participants:  Jessica, Jacqueline, Ben, Vincent, Luis
 
 Notes...
+Vincent is starting with the profile pages for students and professors. 
 
-
-## 
-Participants:
-
-Notes...
-
-## 
-Participants:
+## 11/25/2023 8:45-9:00 pm
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
 
 Notes...
+Vincent is working on the models file for the Ratings class. The team discussed which ratigns attributes we will use. 
 
+
+## 11/26/2023 12:40-12:55 pm
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
+
+Notes...
+Vincent is continuing with US#3, profile pages were added and models.py was updated with other necessary classes.
+The team will use SQLAlchmey for the database.
+
+## 11/27/2023 9:00-9:15 pm
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
+
+Notes...
+Progress on US#3 continues, the next steps are to make a ratings form.
+
+
+## 11/28/2023 7:30-7:45 pm
+Participants:  Jessica, Jacqueline, Ben, Vincent, Luis
+
+Notes...
+US #3 is still in progress. We need to add a form for leaving a rating and to display ratings on profiles 
+
+## 11/29/2023 8:40-8:55 am
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
+
+Notes...
+Ben has 90% of the blackbox testing done. US#3 is almost complete. Needs an if statement in routes to display professor template 
 
 # Sprint Review
-Date/Time: 
+Date/Time 11/30/2023 4:00-4:30 pm 
 
-Participants:  
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis
 
 Notes...
-
+The sprint overall went well. US#3 was the most robust, and it did not get all the way complete however we 
+did make good progress. Keeping in mind the holiday and the fact that most of the team got sick over break,
+we feel we accomplished a lot. We will continue to work on US#3 and complete it in the next sprint.
 
 # Sprint Retrospective
- 
+The communication has been consistent and the team agrees we are still working well toghether depsite 
+some health and time constraints due to the holiday.
 
 # Sprint Planning
+Vincent will finish US#3. Jacqueline will work on US#4. Luis will work on US#5. Ben will work on US#6.
+Ben and Luis will finish testing. Jessica is going to research containerization and deployment. Jacqueline
+will continue to update the scrum notes and Jira board. 
 
 
 # Daily Scrums
