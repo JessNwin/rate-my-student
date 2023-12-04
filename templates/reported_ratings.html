@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Reported Ratings</h1>
+  {% if reported_ratings %}
+    <ul>
+      {% for report, rating in reported_ratings %}
+        <li>
+          <strong>Reporter ID:</strong> {{ report.reporter_id }}<br>
+          <strong>Rating ID:</strong> {{ rating.id }}<br>
+          <strong>Description:</strong> {{ report.description }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No reported ratings.</p>
+  {% endif %}
+{% endblock %}
+

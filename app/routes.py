@@ -1,8 +1,8 @@
 # TODO: Implement school email verification
 
 from app import app, db, load_user
-from app.models import User, Student, Professor, Recommendation, Rating
-from app.forms import RatingForm, SignUpForm, SignInForm
+from app.models import User, Student, Professor, Recommendation, Rating, Report, Administrator
+from app.forms import RatingForm, SignUpForm, SignInForm, ReportForm
 from flask import flash, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
@@ -117,6 +117,11 @@ def user_profile(userid):
         print("Professor found:", professor.full_name)
 
         return render_template('professor_profile.html', professor=professor)
+    elif targetUser.type == 'administator':
+        # Handle administrator profile
+        administrator = Administrator.query.get(userid)
+        print("Administrator found:", administrator.full_name)
+        return render_template('administrator_profile.html', administrator=administrator)
     else:
         print("Unrecognized user type for ID:", userid)
         return redirect(url_for('search_page'))
@@ -168,3 +173,36 @@ def rate_student(student_id):
         return redirect(url_for('user_profile', userid=student_id))
 
     return render_template('rate_student.html', form=form, student=student)
+
+
+
+# Report functionality
+@login_required
+@app.route('/report_rating/<int:rating_id>', methods=['GET', 'POST'])
+def report_rating(rating_id):
+    form = ReportForm()
+
+    if form.validate_on_submit():
+        # Create a report entry in the database
+        report = Report(
+            description=form.report_description.data,
+            rating_id=rating_id,
+            reporter_id=current_user.id
+        )
+
+        db.session.add(report)
+        db.session.commit()
+        flash('Rating successfully Reported for Admin Review', 'success')
+
+
+        # Redirect to the student's profile page after submission
+        return redirect(url_for('user_profile'))
+
+    return render_template('report_rating.html', form=form)
+
+# View reported ratings functionality
+@app.route('/admin/reported_ratings')
+def reported_ratings():
+    reported_ratings = db.session.query(Report,Rating).join(Rating).all()
+    return render_template('reported_ratings.html', reported_ratings=reported_ratings)
+

@@ -55,3 +55,20 @@ class Recommendation(db.Model):
     professor_id = db.Column(db.String, db.ForeignKey('users.id'))
     student_id = db.Column(db.String, db.ForeignKey('users.id'))
     description = db.Column(db.String)
+
+##add admin user
+class Administrator(User):
+    __tablename__ = 'administrators'
+    reported_ratings = db.relationship('Report',
+                                       foreign_keys='[Report.rating_id]',
+                                       backref='reported_rating',
+                                       lazy=True)
+
+##add report class
+class Report(db.Model):
+    __tablename__ = 'reports'
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String)
+    rating_id = db.Column(db.String, db.ForeignKey('ratings.id'))
+    reporter_id = db.Column(db.String, db.ForeignKey('users.id'))
+    rating = db.relationship('Rating', backref='reports', lazy=True)

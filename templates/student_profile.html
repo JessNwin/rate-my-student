@@ -27,8 +27,11 @@
              Description:
              {{ rating.description }}
         </td>
-        <td>     
-            <button type="button">Report</button>
+        <td>
+            <form action="/report_rating/{{ rating.id }}" method="post">
+                {{ report_form.hidden_tag() }}
+                <button type="submit">Report Rating</button>
+            </form>
         </td>
     </tr>
     <p></p>
