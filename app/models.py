@@ -9,6 +9,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String)
     password = db.Column(db.LargeBinary)
     type = db.Column(db.String)
+#def__repr__(self):
+    #return f"<User {self.id}>"
 
 class Student(User):
     __tablename__ = 'students'
@@ -28,12 +30,14 @@ class Student(User):
                                       lazy=True)
 
 class Professor(User):
+
     __tablename__ = 'professors'
     # Inherits id, full_name, email, password from User
     recommendations = db.relationship('Recommendation', 
                                       foreign_keys='[Recommendation.professor_id]', 
                                       backref='professor_recommendations',  # professor backref name
                                       lazy=True)
+    average_rating = db.Column(db.Float)
     
 class Rating(db.Model):
     __tablename__ = 'ratings'
