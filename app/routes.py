@@ -1,5 +1,7 @@
 # TODO: Implement school email verification
 
+# TODO: Implement school email verification
+from sqlalchemy import func
 from app import app, db, load_user
 from app.models import User, Student, Professor, Recommendation, Rating
 from app.forms import SignUpForm, SignInForm
@@ -73,14 +75,14 @@ def users_signout():
     logout_user()
     return redirect(url_for('index'))
 
-# Student/Professor search functionality
+ #Student/Professor search functionality
 @login_required
 @app.route('/users/search')
 def search_page():
     print(isinstance(current_user, Student))
     return render_template('search.html')
 
-# Search suggestion logic for main search bar
+#Search suggestion logic for main search bar
 @app.route('/search-suggestions')
 def search_suggestions():
     
@@ -93,6 +95,39 @@ def search_suggestions():
         suggestions = []
 
     return jsonify(suggestions)
+
+# this is the route to try to include the list of top- rated students 
+@app.route('/professor/home', methods=['GET'])
+@login_required
+def professor_home():
+    if current_user.type == 'professor':
+        # Calculate the average rating for each student
+        students = Student.query.all()
+        for student in students:
+            avg_rating = db.session.query(func.avg(Rating.rating_overall)).filter_by(student_id=student.id).scalar()
+            student.average_rating = avg_rating if avg_rating else 0.0
+
+        # Get the top 5 students based on average rating
+        top_students = Student.query.order_by(Student.average_rating.desc()).limit(5).all()
+
+        return render_template('professor_home.html', top_students=top_students)
+    else:
+        return "Access Denied"
+
+# this is the route for professor are able to recommend students 
+
+@app.route('/recommend/<student_id>', methods=['POST'])
+@login_required
+def recommend_student(student_id):
+    if current_user.type == 'professor':
+        description = request.form.get('recommendation_description')
+        recommendation = Recommendation(professor_id=current_user.id, student_id=student_id, description=description)
+        db.session.add(recommendation)
+        db.session.commit()
+        flash('Recommendation submitted successfully', 'success')
+        return redirect(url_for('professor_home'))
+    else:
+        return "ACCESS DENIED"
 
 @login_required
 @app.route('/users/<userid>', methods=['GET', 'POST'])
@@ -108,4 +143,3 @@ def user_profile(userid):
     else:
         print("No user found with ID:", userid)
         return redirect(url_for('search_page'))
-
