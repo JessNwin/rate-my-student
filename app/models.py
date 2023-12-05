@@ -26,6 +26,8 @@ class Student(User):
                                       foreign_keys='[Recommendation.student_id]', 
                                       backref='student_recommendations',  # student backref name
                                       lazy=True)
+    
+    average_rating = db.Column(db.Float)
 
 class Professor(User):
     __tablename__ = 'professors'
@@ -54,6 +56,16 @@ class Recommendation(db.Model):
     professor_id = db.Column(db.String, db.ForeignKey('users.id'))
     student_id = db.Column(db.String, db.ForeignKey('users.id'))
     description = db.Column(db.String)
+
+    written_ratings = db.relationship('Rating',
+                                      foreign_keys='[Rating.reviewer_id]',
+                                      backref='reviewer',
+                                      lazy=True)  # Ratings written by this user
+
+    recommendations = db.relationship('Recommendation',
+                                      foreign_keys='[Recommendation.student_id]',
+                                      backref='student_recommendations',  # student backref name
+                                      lazy=True)
 
 ##add admin user
 class Administrator(User):
