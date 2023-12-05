@@ -206,3 +206,35 @@ def reported_ratings():
     reported_ratings = db.session.query(Report,Rating).join(Rating).all()
     return render_template('reported_ratings.html', reported_ratings=reported_ratings)
 
+# this is the route for professor are able to recommend students
+@app.route('/recommend/<student_id>', methods=['POST'])
+@login_required
+def recommend_student(student_id):
+    if current_user.type == 'professor':
+        description = request.form.get('recommendation_description')
+        recommendation = Recommendation(professor_id=current_user.id, student_id=student_id, description=description)
+        db.session.add(recommendation)
+        db.session.commit()
+        flash('Recommendation submitted successfully', 'success')
+        return redirect(url_for('professor_profile'))
+    else:
+        return "ACCESS DENIED"
+
+# this is the route to try to include the list of top-rated students
+@app.route('/professor/home', methods=['GET'])
+@login_required
+def professor_home():
+    if current_user.type == 'professor':
+        # Calculate the average rating for each student
+        students = Student.query.all()
+        for student in students:
+            avg_rating = db.session.query(func.avg(Rating.rating_overall)).filter_by(student_id=student.id).scalar()
+            student.average_rating = avg_rating if avg_rating else 0.0
+
+        # Get the top 5 students based on average rating
+        top_students = Student.query.order_by(Student.average_rating.desc()).limit(5).all()
+
+        return render_template('professor_profile.html', top_students=top_students)
+    else:
+        return "Access Denied"
+
