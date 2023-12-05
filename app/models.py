@@ -39,7 +39,6 @@ class Rating(db.Model):
     __tablename__ = 'ratings'
     id = db.Column(db.Integer, primary_key=True)
 
-
     rating_overall = db.Column(db.Float) # averaged rating of all rating attributes
     rating_participation = db.Column(db.Integer)
     rating_communication = db.Column(db.Integer)
@@ -59,8 +58,9 @@ class Recommendation(db.Model):
 ##add admin user
 class Administrator(User):
     __tablename__ = 'administrators'
+    id = db.Column(db.String, db.ForeignKey('users.id'), primary_key=True)
     reported_ratings = db.relationship('Report',
-                                       foreign_keys='[Report.rating_id]',
+                                       foreign_keys='[Report.reporter_id]',  
                                        backref='reported_rating',
                                        lazy=True)
 
@@ -69,6 +69,6 @@ class Report(db.Model):
     __tablename__ = 'reports'
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
-    rating_id = db.Column(db.String, db.ForeignKey('ratings.id'))
+    rating_id = db.Column(db.Integer, db.ForeignKey('ratings.id'))
     reporter_id = db.Column(db.String, db.ForeignKey('users.id'))
     rating = db.relationship('Rating', backref='reports', lazy=True)
