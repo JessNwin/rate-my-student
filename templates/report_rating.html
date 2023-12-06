@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="card">
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <p> Report Reason: <br> {{ form.report_description(size=50) }}</p>
+            <input type="submit" value="Submit">
+        </form>
+</div>
+{% endblock %}

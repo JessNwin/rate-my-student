@@ -1,6 +1,7 @@
 # TODO: Implement school email verification
 
-from app import app, db, load_user
+from sqlalchemy import func
+from app import app, db, load_user, makeTestUsers
 from app.models import User, Student, Professor, Recommendation, Rating, Report, Administrator
 from app.forms import RatingForm, SignUpForm, SignInForm, ReportForm
 from flask import flash, jsonify, render_template, redirect, url_for, request
@@ -10,7 +11,11 @@ import bcrypt
 @app.route('/')
 @app.route('/index')
 @app.route('/index.html')
-def index(): 
+def index():
+    if load_user('admin') == None:
+        makeTestUsers.makeAdmin()
+        makeTestUsers.makeProfessors()
+        makeTestUsers.makeStudents()
     return render_template('index.html')
 
 # sign-in functionality
@@ -194,17 +199,19 @@ def report_rating(rating_id):
         db.session.commit()
         flash('Rating successfully Reported for Admin Review', 'success')
 
-
         # Redirect to the student's profile page after submission
-        return redirect(url_for('user_profile'))
+        rating = Rating.query.get(rating_id)
+        return redirect(url_for('user_profile', userid=rating.student_id))
 
     return render_template('report_rating.html', form=form)
 
 # View reported ratings functionality
 @app.route('/admin/reported_ratings')
 def reported_ratings():
-    reported_ratings = db.session.query(Report,Rating).join(Rating).all()
+    reported_ratings = db.session.query(Report, Rating).join(Rating).all()
+    print(reported_ratings) 
     return render_template('reported_ratings.html', reported_ratings=reported_ratings)
+
 
 # this is the route for professor are able to recommend students
 @app.route('/recommend/<student_id>', methods=['POST'])
