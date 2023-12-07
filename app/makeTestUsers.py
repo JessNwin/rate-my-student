@@ -54,3 +54,12 @@ def makeAdmin():
                type='administrator')
     db.session.add(newAdmin)
     db.session.commit()
+
+def makeTestUser():
+    newTestUser = User(id="test",
+               full_name="test",
+               email="test@gmail.com",
+               password=testPasswords,
+               type='student')
+    db.session.add(newTestUser)
+    db.session.commit()
