@@ -25,24 +25,21 @@
 </div>
 <!-- Display user ratings -->
 {% for rating in student.ratings %}
-<div class="card">
-    <tr class="{{ 'even_row' if loop.index % 2 == 0 else 'odd_row' }}">
-        <td>
-            Overall Rating: 
-            {{ rating.rating_overall }}
-        </td>
-        <br>
-        <td>
-             Description:
-             {{ rating.description }}
-        </td>
-        <td>
-            <form action="/report_rating/{{ rating.id }}" method="post">
-                <button type="submit" class="btn2">Report Rating</button>
-            </form>
-        </td>
-    </tr>
-    <p></p>
+<div class="card-rating">
+    <div class="card">
+        <div class="rating-details">
+            <p><strong>Overall Rating:</strong> {{ rating.rating_overall }}</p>
+            <p><strong>Participation Rating:</strong> {{ rating.rating_participation }}</p>
+            <p><strong>Skill Rating:</strong> {{ rating.rating_skill }}</p>
+            <p><strong>Communication Rating:</strong> {{ rating.rating_communication }}</p>
+        </div>
+    </div>
+    <div class="rating-description">
+        <p><strong>Description:</strong> {{ rating.description }}</p>
+    </div>
+    <form action="/report_rating/{{ rating.id }}" method="post" class="report-form">
+        <button type="submit" class="btn2">Report Rating</button>
+    </form>
 </div>
 {% endfor %}
 </div>

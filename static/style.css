@@ -11,13 +11,14 @@
     font-family: 'Roboto', sans-serif;
 
   }
-  section{
+  section {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh; /* Changed from height to min-height */
     background: #3586ff;
     overflow: hidden;
-  }
+}
+
   section .air{
     position: absolute;
     bottom: 0;
@@ -125,17 +126,42 @@
 }
 
 
-  .card-centered {
-    word-wrap: break-word;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 15px; 
-    padding: 20px; 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
-    margin: 10px; 
-    text-align: center;
-  }
+.card-centered {
+  word-wrap: break-word;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 15px; 
+  padding: 20px; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+  margin: 10px; 
+  text-align: center;
+}
+.card-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5); 
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.rating-details {
+    flex: 1; /* Assigns equal width to both columns */
+    margin: 0 10px; /* Spacing between columns */
+}
+.rating-description {
+  flex: 1; 
+  margin: 0 10px; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+  min-width: 0; /* Allows the flex item to shrink below its content size */
+}
 
+.report-form {
+    margin-top: 10px; 
+}
 
 
 /* Source: https://getcssscan.com/css-buttons-examples */

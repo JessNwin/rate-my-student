@@ -108,7 +108,7 @@ def search_suggestions():
 @app.route('/users/<userid>', methods=['GET', 'POST'])
 def user_profile(userid):
     targetUser = User.query.filter_by(id=userid).first()
-    print(f'Admin quiery: {Administrator.query.get(userid)}')
+    print(f'Admin query: {Administrator.query.get(userid)}')
     print(f'Target user: {targetUser.type}')
     if not targetUser:
         print("No user found with ID:", userid)
@@ -187,7 +187,6 @@ def rate_student(student_id):
         return redirect(url_for('user_profile', userid=student_id))
 
     return render_template('rate_student.html', form=form, student=student)
-
 
 
 # Report functionality
