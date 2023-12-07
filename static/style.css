@@ -1,8 +1,37 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+#head-img {
+  justify-content: center;
+  width: 200px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('/static/pics/logo.jpeg');
+}
+
+.top-bar {
+  word-wrap: break-word;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+  margin: 10px; 
+}
+
 .radio-inline {
     display: inline-block;
     margin-right: 10px;
 }
 
+.profile-title {
+  font-family: 'Fredoka One', cursive;
+  color: #1c1c1c;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 1%;
+}
 
 /* Background source: https://alvarotrigo.com/blog/animated-backgrounds-css/ */
 *{
@@ -163,7 +192,6 @@
     margin-top: 10px; 
 }
 
-
 /* Source: https://getcssscan.com/css-buttons-examples */
 .btn {
   align-items: center;
@@ -269,11 +297,6 @@
   overflow-y: auto;
   z-index: 1000;
   display: none; /* Hide it by default */
-}
-
-.profile-title {
-  text-align: center;
-  margin-bottom: 1%;
 }
 
 .avg-rating {

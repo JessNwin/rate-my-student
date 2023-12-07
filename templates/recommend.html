@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div class="card-fit">
+    <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <p> Description: <br> {{ form.description(size=15) }}</p>
+        <input type="submit" class="btn" value="Submit">
+    </form>
+</div>
+
+{% endblock %}

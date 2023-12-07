@@ -5,6 +5,8 @@ from app import app, db, load_user, makeTestUsers
 from app.models import User, Student, Professor, Recommendation, Rating, Report, Administrator
 from app.forms import RatingForm, SignUpForm, SignInForm, ReportForm
 from flask import flash, get_flashed_messages, jsonify, render_template, redirect, url_for, request
+from app.forms import RatingForm, RecommendationForm, SignUpForm, SignInForm, ReportForm
+from flask import flash, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
 
@@ -126,13 +128,16 @@ def user_profile(userid):
             average_rating = 0  # Default value when there are no ratings
 
         print(average_rating)
-        return render_template('student_profile.html', student=student, averagerating=average_rating)
+        print(student.recommendations)
+
+        return render_template('student_profile.html', student=student, averagerating=average_rating, )
     
     elif targetUser.type == 'professor':
         # Handle professor profile
         professor = Professor.query.get(userid)
         print("Professor found:", professor.full_name)
-        return render_template('professor_profile.html', professor=professor)
+        print(professor.recommendations)
+        return render_template('professor_profile.html', professor=professor, professor_recommendations=professor.recommendations)
     
     elif targetUser.type == 'administrator':
         # Handle administrator profile
@@ -220,6 +225,8 @@ def report_rating(rating_id):
 # View reported ratings functionality
 @app.route('/admin/reported_ratings')
 def reported_ratings():
+    if current_user.type != 'administrator':
+        return redirect(url_for('search_page'))
     reported_ratings = db.session.query(Report, Rating).join(Rating).all()
     print(reported_ratings) 
     return render_template('reported_ratings.html', reported_ratings=reported_ratings)
@@ -249,18 +256,29 @@ def reported_ratings_action(rating_id, report_id, delete):
 
 
 # this is the route for professor are able to recommend students
-@app.route('/recommend/<student_id>', methods=['POST'])
+@app.route('/recommend/<student_id>', methods=['GET','POST'])
 @login_required
 def recommend_student(student_id):
-    if current_user.type == 'professor':
-        description = request.form.get('recommendation_description')
-        recommendation = Recommendation(professor_id=current_user.id, student_id=student_id, description=description)
-        db.session.add(recommendation)
+    if current_user.type != 'professor':
+        return redirect(url_for('/users/search')) 
+
+    form = RecommendationForm()
+    existing_recommendation = Recommendation.query.filter_by(professor_id=current_user.id, student_id=student_id).first()
+
+    if existing_recommendation:
+        return redirect(url_for('user_profile', userid=student_id))
+
+    if form.validate_on_submit():
+        new_recommendation = Recommendation(
+            professor_id=current_user.id, 
+            student_id=student_id, 
+            description=form.description.data
+        )
+        db.session.add(new_recommendation)
         db.session.commit()
-        flash('Recommendation submitted successfully', 'success')
-        return redirect(url_for('professor_profile'))
-    else:
-        return "ACCESS DENIED"
+        return redirect(url_for('user_profile', userid=student_id))
+
+    return render_template("recommend.html", form=form)
 
 # this is the route to try to include the list of top-rated students
 @app.route('/professor/home', methods=['GET'])
