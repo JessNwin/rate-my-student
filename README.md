@@ -4,7 +4,7 @@
 
 The 'Rate My Student' app envisions creating a transparent and collaborative educational ecosystem by providing a platform for constructive feedback and performance evaluation. Our software aims to address the challenge of subjective assessment and foster a positive learning environment for students. The primary goal is to empower educators and students themselves to contribute valuable insights into individual learning journeys. This app targets educational institutions, professors, and students. By encouraging open communication and feedback, 'Rate My Student' strives to enhance the educational experience, promote continuous improvement, and ultimately contribute to the success and well-rounded growth of every student.
 
-![](images/logo.jpeg)
+![](images/logo.png)
 
 # Design
 
@@ -91,3 +91,11 @@ Share in this section the results of the tests performed to attest to the qualit
 # Deployment 
 
 The final product must demonstrate the integrity of at least 5 of the 6 planned user stories. The final product must be packaged in the form of a docker image. In this section, describe the steps needed to generate that image so that others can deploy the product themselves. All files required for the deployment must be available, including the docker file, source/binary code, external package requirements, data files, images, etc. Instructions on how to create a container from the docker image with parameters such as port mapping, environment variables settings, etc., must be described (if needed). 
+
+##Run the image 
+...
+flask run -h 0.0.0.0 --port 5001
+...
+
+test web app using a browser and the link:
+http://127.0.0.1:5001
