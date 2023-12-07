@@ -31,7 +31,7 @@ class SearchTest(unittest.TestCase):
             
             #Signin the test user
             signinButton = self.browser.find_elements(By.TAG_NAME, 'button')[1]
-            wait = WebDriverWait(self.browser, 10)
+            wait = WebDriverWait(self.browser, 2)
             signinButton = wait.until(expected_conditions.element_to_be_clickable(signinButton))
             signinButton.click()
             
