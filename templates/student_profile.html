@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block main %}
 
-<h1 class="profile-title"> {{ student.id }}'s Profile</h1>
+
+<h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
+
 
 <!-- Calculate and display student average rating -->
 {% if student.ratings|length > 0 %}
@@ -27,8 +29,10 @@
              Description:
              {{ rating.description }}
         </td>
-        <td>     
-            <button type="button">Report</button>
+        <td>
+            <form action="/report_rating/{{ rating.id }}" method="post">
+                <button type="submit">Report Rating</button>
+            </form>
         </td>
     </tr>
     <p></p>

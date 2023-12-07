@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <h1>{{ professor.full_name }}'s Profile:</h1>
+
+  <h2>Top 5 Rated Students:</h2>
+  <ul>
+    {% for student in top_students %}
+      <li>{{ student.full_name }} - Average Rating: {{ student.average_rating }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Recommend Students:</h2>
+  <ul>
+    {% for student in top_students %}
+      <li>
+        {{ student.full_name }}
+        <form method="post" action="{{ url_for('recommend_student', student_id=student.id) }}">
+          <input type="text" name="recommendation_description" placeholder="Enter recommendation">
+          <button type="submit">Recommend</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

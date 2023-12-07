@@ -26,7 +26,7 @@ class Student(User):
                                       foreign_keys='[Recommendation.student_id]', 
                                       backref='student_recommendations',  # student backref name
                                       lazy=True)
-
+    
 class Professor(User):
     __tablename__ = 'professors'
     # Inherits id, full_name, email, password from User
@@ -34,6 +34,7 @@ class Professor(User):
                                       foreign_keys='[Recommendation.professor_id]', 
                                       backref='professor_recommendations',  # professor backref name
                                       lazy=True)
+    #average_rating = db.Column(db.Float) #This was causing an error for some reason
     
 class Rating(db.Model):
     __tablename__ = 'ratings'
@@ -55,3 +56,21 @@ class Recommendation(db.Model):
     professor_id = db.Column(db.String, db.ForeignKey('users.id'))
     student_id = db.Column(db.String, db.ForeignKey('users.id'))
     description = db.Column(db.String)
+
+##add admin user
+class Administrator(User):
+    __tablename__ = 'administrators'
+    id = db.Column(db.String, db.ForeignKey('users.id'), primary_key=True)
+    reported_ratings = db.relationship('Report',
+                                       foreign_keys='[Report.reporter_id]',  
+                                       backref='reported_rating',
+                                       lazy=True)
+
+##add report class
+class Report(db.Model):
+    __tablename__ = 'reports'
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String)
+    rating_id = db.Column(db.Integer, db.ForeignKey('ratings.id'))
+    reporter_id = db.Column(db.String, db.ForeignKey('users.id'))
+    rating = db.relationship('Rating', backref='reports', lazy=True)
