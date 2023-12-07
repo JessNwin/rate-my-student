@@ -108,8 +108,7 @@ def search_suggestions():
 @app.route('/users/<userid>', methods=['GET', 'POST'])
 def user_profile(userid):
     targetUser = User.query.filter_by(id=userid).first()
-    print(f'Admin query: {Administrator.query.get(userid)}')
-    print(f'Target user: {targetUser.type}')
+
     if not targetUser:
         print("No user found with ID:", userid)
         return redirect(url_for('search_page'))
@@ -136,7 +135,7 @@ def user_profile(userid):
     
     elif targetUser.type == 'administrator':
         # Handle administrator profile
-        administrator = User.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population
+        administrator = Administrator.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population
         print("Administrator found:", administrator.full_name)
         return render_template('administrator_profile.html', administrator=administrator)
     else:
