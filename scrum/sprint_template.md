@@ -145,47 +145,51 @@ Vincent will finish US#3. Jacqueline will work on US#4. Luis will work on US#5. 
 Ben and Luis will finish testing. Jessica is going to research containerization and deployment. Jacqueline
 will continue to update the scrum notes and Jira board. 
 
-
 # Daily Scrums
 
-## 
-Participants:
+## 12/01/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Jessica found out containerization can happen before coding is complete. 
 
-
-## 
-Participants:
-
-Notes...
-
-
-## 
-Participants:
+## 12/02/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Vincent completed US#3. We're going to create a backend and frontend branch from Dev.
 
+## 12/03/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
-## 
-Participants:
 
 Notes...
+Jacquline will work on US#4, Luis will do US#5, Ben will do US#6.
 
 
-## 
-Participants:
-
-Notes...
- 
-
-## 
-Participants:
+## 12/04/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+US #4 is complete. Jacqueline couldn't test the code because the search function was giving internal server error. Ben will jump in and try to assist. 
+
+## 12/05/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
+
+Notes...
+Luis completed US#5. Ben fixed a line in the administrator model. Luis was also encountering the the internal server error. Vincent and Ben will debug. 
+
+## 12/06/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
+
+Notes...
+Vincent debugged what he calls the "lil rats" programmed. Ben completed US#6. Jessica completed containerization. Luis is still working on whitebox testing. 
 
 
-## 
-Participants:
+# Sprint Review
+Date/Time: 12/07/2023
+
+Participants: 
 
 Notes...
 
