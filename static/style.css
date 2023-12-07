@@ -7,7 +7,7 @@
   height: 100px;
   background-size: contain;
   background-repeat: no-repeat;
-  background-image: url('/static/pics/logo.jpeg');
+  background-image: url('/static/pics/logo.png');
 }
 
 .top-bar {
