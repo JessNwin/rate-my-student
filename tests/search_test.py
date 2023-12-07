@@ -13,7 +13,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from app import app, db
 from app.models import User
-import bcrypt
 from app import makeTestUsers 
 
 class SearchTest(unittest.TestCase):
@@ -56,7 +55,7 @@ class SearchTest(unittest.TestCase):
 
             first_suggestion = self.browser.find_element(By.CSS_SELECTOR, '#suggestions-container div')
             first_suggestion.click()
-
+            
             page = self.browser.current_url
             self.assertEqual('http://localhost:5000/users/test', page)
             removeTestUser = User.query.filter_by(id='test').first()

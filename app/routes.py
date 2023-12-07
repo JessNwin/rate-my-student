@@ -26,7 +26,7 @@ def users_signin():
     signInForm = SignInForm()
 
     if signInForm.validate_on_submit():
-        userID = signInForm.id.data
+        userID = signInForm.id.data.lower()
         userPass = signInForm.password.data.encode('utf-8')
 
         checkUser = load_user(userID)
@@ -67,7 +67,7 @@ def users_signup():
 
         if password == password_confirm:
             hashedPass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            newUser = User(id=signUp.id.data,
+            newUser = User(id=signUp.id.data.lower(),
                            full_name=signUp.full_name.data,
                            email=signUp.email.data,
                            password=hashedPass,
