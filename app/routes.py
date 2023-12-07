@@ -138,11 +138,8 @@ def user_profile(userid):
         print(professor.recommendations)
         return render_template('professor_profile.html', professor=professor, professor_recommendations=professor.recommendations)
     
-    elif targetUser.type == 'administrator':
-        # Handle administrator profile
-        administrator = Administrator.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population
-        print("Administrator found:", administrator.full_name)
-        return render_template('administrator_profile.html', administrator=administrator)
+    elif targetUser.type == 'administrator' and current_user.type == 'administrator':
+        return redirect(url_for('reported_ratings'))
     else:
         print("Unrecognized user type for ID:", userid)
         return redirect(url_for('search_page'))
@@ -277,23 +274,6 @@ def recommend_student(student_id):
         db.session.commit()
         return redirect(url_for('user_profile', userid=student_id))
 
-    return render_template("recommend.html", form=form)
+    return render_template("recommend.html", form=form, student=Student.query.filter_by(id=student_id).first())
 
-# this is the route to try to include the list of top-rated students
-@app.route('/professor/home', methods=['GET'])
-@login_required
-def professor_home():
-    if current_user.type == 'professor':
-        # Calculate the average rating for each student
-        students = Student.query.all()
-        for student in students:
-            avg_rating = db.session.query(func.avg(Rating.rating_overall)).filter_by(student_id=student.id).scalar()
-            student.average_rating = avg_rating if avg_rating else 0.0
-
-        # Get the top 5 students based on average rating
-        top_students = Student.query.order_by(Student.average_rating.desc()).limit(5).all()
-
-        return render_template('professor_profile.html', top_students=top_students)
-    else:
-        return "Access Denied"
 

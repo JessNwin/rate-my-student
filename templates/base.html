@@ -11,8 +11,17 @@
 <section>
     <div class='air air1'></div>
     <div class='air air2'></div>
-    <div class="top-bar"></div>
-    <div id="head-img"></div>
+    <div class="top-bar">
+        <div id="head-img"></div>
+        {% if current_user.is_authenticated %}
+            <div class="profile-link">
+                <a href="/users/{{ current_user.id }}" class="btn">My Profile</a>
+                <a href="/users/search" class="btn">Search</a>
+                <a href="/users/signout" class="btn">Sign Out</a>
+            </div>
+        {% endif %}
+    </div>
+        
         {% block main %}
         {% endblock %}
     </body>

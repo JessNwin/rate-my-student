@@ -2,6 +2,7 @@
 {% block main %}
 
 <div class="card-fit">
+    <h1 class="profile-title">Why do you recommend {{ student.full_name }}?</h1>
     <form action="" method="POST" novalidate>
         {{ form.hidden_tag() }}
         <p> Description: <br> {{ form.description(size=15) }}</p>

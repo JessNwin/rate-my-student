@@ -1,40 +1,57 @@
 {% extends 'base.html' %}
 {% block main %}
 
-<h1>Rate Student: {{ student.full_name }}</h1>
+<div class="card-fit">
+    <h1><strong>Rate Student: </strong>{{ student.full_name }}</h1>
 
-<form action="{{ url_for('rate_student', student_id=student.id) }}" method="POST">
-    {{ form.hidden_tag() }}
+    <form action="{{ url_for('rate_student', student_id=student.id) }}" method="POST">
+        {{ form.hidden_tag() }}
 
-    <div>
-        {{ form.rating_participation.label }}
-        {% for subfield in form.rating_participation %}
-            <label class="radio-inline">{{ subfield }} {{ subfield.label.text }}</label>
-        {% endfor %}
-    </div>
+        <div>
+            {{ form.rating_participation.label }}:
+            <div class="radio-group"> <!-- Container for the horizontal radio buttons -->
+                {% for subfield in form.rating_participation %}
+                    <div class="radio-container">
+                        {{ subfield }}
+                        <label for="{{ subfield.id }}" class="radio-inline">{{ subfield.label.text }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    <div>
-        {{ form.rating_communication.label }}
-        {% for subfield in form.rating_communication %}
-            <label class="radio-inline">{{ subfield }} {{ subfield.label.text }}</label>
-        {% endfor %}
-    </div>
+        <div>
+            {{ form.rating_communication.label }}:
+            <div class="radio-group">
+                {% for subfield in form.rating_communication %}
+                    <div class="radio-container">
+                        {{ subfield }}
+                        <label for="{{ subfield.id }}" class="radio-inline">{{ subfield.label.text }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    <div>
-        {{ form.rating_skill.label }}
-        {% for subfield in form.rating_skill %}
-            <label class="radio-inline">{{ subfield }} {{ subfield.label.text }}</label>
-        {% endfor %}
-    </div>
+        <div>
+            {{ form.rating_skill.label }}:
+            <div class="radio-group">
+                {% for subfield in form.rating_skill %}
+                    <div class="radio-container">
+                        {{ subfield }}
+                        <label for="{{ subfield.id }}" class="radio-inline">{{ subfield.label.text }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    <div>
-        {{ form.description.label }}
-        {{ form.description }}
-    </div>
+        <div>
+            {{ form.description.label }}
+            {{ form.description }}
+        </div>
 
-    <div>
-        {{ form.submit }}
-    </div>
-</form>
+        <div>
+            <input type="submit" class="btn" value="Submit">
+        </div>
+    </form>
+</div>
 
 {% endblock %}

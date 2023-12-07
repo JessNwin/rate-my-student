@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<div id="search-bar-container">
-    <form action="/search" method="get">
-        <input type="text" id="search-input" name="query" placeholder="Enter search term...">
-    </form>
-    <div id="suggestions-container"></div>
+<div class="card-fit">
+    <h1 class="profile-title">Profile Search:</h1>
+    <div class="profile-title">Find a Student or Professor</div>
+    <div id="search-bar-container">
+        <form action="/search" method="get">
+            <input type="text" id="search-input" name="query" placeholder="Enter Name...">
+        </form>
+        <div id="suggestions-container"></div>
+    </div>
 </div>
-
 <script>
 
 document.getElementById('search-input').addEventListener('input', function() {
