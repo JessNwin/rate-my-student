@@ -3,8 +3,8 @@ from flask import Flask
 import os
 
 app = Flask("Rate My Student")
-# app.secret_key = os.environ['SECRET_KEY']
-app.secret_key = 'OogaBooga'
+app.secret_key = os.environ['SECRET_KEY']
+# app.secret_key = 'OogaBooga'
 
 # db initialization
 from flask_sqlalchemy import SQLAlchemy
