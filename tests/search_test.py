@@ -31,28 +31,32 @@ class SearchTest(unittest.TestCase):
             
             #Signin the test user
             signinButton = self.browser.find_elements(By.TAG_NAME, 'button')[1]
+            wait = WebDriverWait(self.browser, 10)
+            signinButton = wait.until(expected_conditions.element_to_be_clickable(signinButton))
             signinButton.click()
             
             id = self.browser.find_element(By.ID, 'id')
+            id = wait.until(expected_conditions.presence_of_element_located((By.ID, 'id')))
             self.assertIsNotNone(id)
             id.send_keys('test')     
 
             password = self.browser.find_element(By.ID, 'password')
+            password = wait.until(expected_conditions.presence_of_element_located((By.ID, 'password')))
             self.assertIsNotNone(password)
             password.send_keys('1')
 
             submit = self.browser.find_element(By.XPATH, '//input[@type="submit"]') 
+            submit = wait.until(expected_conditions.presence_of_element_located((By.XPATH, '//input[@type="submit"]')))
             submit.click()
 
             #Test Search Functionality 
             search = self.browser.find_element(By.ID, 'search-input')
+            search = wait.until(expected_conditions.presence_of_element_located((By.ID, 'search-input')))
             self.assertIsNotNone(search)
             search.send_keys('test')
 
             # waits for 10 seconds so the search suggestion has time to appear
-            wait = WebDriverWait(self.browser, 10)
             first_suggestion = wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, '#suggestions-container div')))
-
             first_suggestion = self.browser.find_element(By.CSS_SELECTOR, '#suggestions-container div')
             first_suggestion.click()
             
