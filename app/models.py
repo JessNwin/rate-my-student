@@ -40,6 +40,7 @@ class Rating(db.Model):
     __tablename__ = 'ratings'
     id = db.Column(db.Integer, primary_key=True)
 
+
     rating_overall = db.Column(db.Float) # averaged rating of all rating attributes
     rating_participation = db.Column(db.Integer)
     rating_communication = db.Column(db.Integer)

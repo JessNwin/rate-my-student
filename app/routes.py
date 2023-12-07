@@ -40,7 +40,6 @@ def users_signin():
         else:
             return ('<p>Incorrect Password</p>')
     return render_template('signin.html', form=signInForm)
-
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_signup():
@@ -124,13 +123,13 @@ def user_profile(userid):
 
         print(average_rating)
         return render_template('student_profile.html', student=student, averagerating=average_rating)
-    
+
     elif targetUser.type == 'professor':
         # Handle professor profile
         professor = Professor.query.get(userid)
         print("Professor found:", professor.full_name)
+
         return render_template('professor_profile.html', professor=professor)
-    
     elif targetUser.type == 'administrator':
         # Handle administrator profile
         administrator = User.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population

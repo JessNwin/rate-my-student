@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block main %}
 
+
 <h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
+
 
 <!-- Calculate and display student average rating -->
 {% if student.ratings|length > 0 %}
