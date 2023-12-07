@@ -2,3 +2,269 @@
     display: inline-block;
     margin-right: 10px;
 }
+
+
+/* Background source: https://alvarotrigo.com/blog/animated-backgrounds-css/ */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+
+  }
+  section{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #3586ff;
+    overflow: hidden;
+  }
+  section .air{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+    background-size: 1000px 100px
+  }
+  section .air.air1{
+    animation: wave 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+  }
+  section .air.air2{
+    animation: wave2 15s linear infinite;
+    z-index: 999;
+    opacity: 0.5;
+    animation-delay: -5s;
+    bottom: 10px;
+  }
+  section .air.air3{
+    animation: wave 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15px;
+  }
+  section .air.air4{
+    animation: wave2 5s linear infinite;
+    z-index: 997;
+    opacity: 0.7;
+    animation-delay: -5s;
+    bottom: 20px;
+  }
+  @keyframes wave{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: 1000px; 
+    }
+  }
+  @keyframes wave2{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: -1000px; 
+    }
+  }
+
+  .box {
+    position: absolute;
+    left: 50%;
+    transform: translateY(20%);
+    transform: translateX(-50%);
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    background-color: var(--island-color);
+    color: white;
+    padding: 20px;
+    border: 2px solid var(--contrast-color);
+  }
+
+  .box-centered {
+    position: absolute;
+    left: 50%;
+    transform: translateY(20%);
+    transform: translateX(-50%);
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    background-color: var(--island-color);
+    color: white;
+    padding: 20px;
+    border: 2px solid var(--contrast-color);
+  }
+
+  .card {
+    word-wrap: break-word;
+    background: rgba(255, 255, 255, 0.5); /* semi-transparent white */
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+    margin: 10px; 
+  }
+
+  .card-fit {
+    word-wrap: break-word;
+    background: rgba(255, 255, 255, 0.5); 
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px; 
+    width: fit-content; /* or you can specify a fixed width or max-width */
+    max-width: 90%; /* optional, to ensure it doesn't get too wide on large screens */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+    margin: 10px auto; /* this will center the card */
+    text-align: center;
+    display: block; /* ensures the margin auto takes effect */
+}
+
+
+  .card-centered {
+    word-wrap: break-word;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 15px; 
+    padding: 20px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+    margin: 10px; 
+    text-align: center;
+  }
+
+
+
+/* Source: https://getcssscan.com/css-buttons-examples */
+.btn {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono",monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 18px;
+}
+
+.btn:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.btn:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+
+.btn2 {
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn2:hover {
+  background-color: rgb(220, 43, 43);
+}
+
+.btn2:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.btn2:focus-visible {
+  box-shadow: none;
+}
+
+#search-bar-container {
+  text-align: center;
+  margin-top: 20%;
+  position: relative; 
+}
+
+#search-input {
+  width: 50%;
+  padding: 10px;
+}
+
+#suggestions-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Centers the suggestions container */
+  width: 50%; 
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none; /* Hide it by default */
+}
+
+.profile-title {
+  text-align: center;
+  margin-bottom: 1%;
+}
+
+.avg-rating {
+  text-align: center;
+
+}
+
+.rating-progress {
+  background-color: #d80000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: rgb(9, 163, 9); 
+  border-radius: 10px 0 0 10px;
+}

@@ -4,7 +4,7 @@
 <h1 class="profile-title"> {{ administrator.id }}'s Profile</h1>
 
 <!-- Add a link to view reported ratings -->
-<a href="{{ url_for('reported_ratings') }}" class="button">View Reported Ratings</a>
+<a href="{{ url_for('reported_ratings') }}" class="btn">View Reported Ratings</a>
 
 <!-- Display list of reported ratings -->
 {% if administrator.reported_ratings|length > 0 %}

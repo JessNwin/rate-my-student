@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="card">
+<div class="card-fit">
         <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
             <p> Username: <br> {{ form.id(size=15) }}</p>
             <p> Password: <br> {{ form.password(size=15) }}</p>
-            <input type="submit" value="Submit">
+            <input type="submit" class="btn" value="Submit">
         </form>
 </div>
 {% endblock %}

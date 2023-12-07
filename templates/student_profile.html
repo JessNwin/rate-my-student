@@ -1,22 +1,31 @@
 {% extends 'base.html' %}
 {% block main %}
-
-<h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
-
-<!-- Calculate and display student average rating -->
+<div class="card">
+    
+    <!-- Calculate and display student average rating -->
+    <div class="card-centered">
+    <h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
 {% if student.ratings|length > 0 %}
     <tr>
         <th>Average Rating: {{ averagerating }}</th>   
     </tr>
 {% else %}
-    <tr>
+<tr>
         <th>No ratings yet</th>
     </tr>
-{% endif %}
-
-<p>
+    {% endif %}
+    <div class="rating-progress">
+        <div class="progress-bar" style="width: {{ averagerating / 5 * 100 }}%;"></div>
+    </div>
+    
+    <p>
+        <!-- Add button to rate this student -->
+        <a href="/rate_student/{{ student.id }}" class="btn">Rate Student</a>
+    </p>
+</div>
 <!-- Display user ratings -->
 {% for rating in student.ratings %}
+<div class="card">
     <tr class="{{ 'even_row' if loop.index % 2 == 0 else 'odd_row' }}">
         <td>
             Overall Rating: 
@@ -29,14 +38,12 @@
         </td>
         <td>
             <form action="/report_rating/{{ rating.id }}" method="post">
-                <button type="submit">Report Rating</button>
+                <button type="submit" class="btn2">Report Rating</button>
             </form>
         </td>
     </tr>
     <p></p>
+</div>
 {% endfor %}
-
-<!-- Add button to rate this student -->
-<a href="/rate_student/{{ student.id }}" class="button">Rate Student</a>
-</p>
+</div>
 {% endblock %}

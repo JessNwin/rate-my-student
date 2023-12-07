@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 {% block main %}
+<div class="card">
   <h1>Reported Ratings</h1>
   {% if reported_ratings %}
     <ul>
       {% for report, rating in reported_ratings %}
+      <div class="card">
         <li>
           <strong>Reporter ID:</strong> {{ report.reporter_id }}<br>
           <strong>Rating ID:</strong> {{ rating.id }}<br>
           <strong>Description:</strong> {{ report.description }}
         </li>
+      </div>
       {% endfor %}
     </ul>
   {% else %}
     <p>No reported ratings.</p>
   {% endif %}
+</div>
 {% endblock %}
+
 

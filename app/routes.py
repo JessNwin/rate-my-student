@@ -110,9 +110,9 @@ def user_profile(userid):
         student = Student.query.get(userid)
         total_rating = sum(rating.rating_overall for rating in student.ratings)
         if student.ratings:
-            average_rating = "{:.2f}".format(total_rating / len(student.ratings))
+            average_rating = total_rating / len(student.ratings)
         else:
-            average_rating = "No Ratings"  # Default value when there are no ratings
+            average_rating = 0  # Default value when there are no ratings
 
         print(average_rating)
         return render_template('student_profile.html', student=student, averagerating=average_rating)
