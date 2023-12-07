@@ -22,13 +22,19 @@
         <!-- Add button to rate this student -->
         <a href="/rate_student/{{ student.id }}" class="btn">Rate Student</a>
     </p>
+    <!-- Conditional button for professors -->
+    {% if current_user.type == 'professor' %}
+    <div>
+        <a href="/recommend/{{ student.id }}" class="btn">Recommend this Student</a>
+    </div>
+    {% endif %}
 </div>
 
 <!-- Display professor recommendations -->
 <div class="card">
     <strong>Recommended by professors: </strong>
         {% for recommendation in student.recommendations %}
-            <p>{{ recommendation.professor_recommendations.full_name }}</p>
+            <a href="/users/{{ recommendation.professor_recommendations.id }}" class="btn2">{{ recommendation.professor_recommendations.full_name }}</a>
         {% endfor %}
 </div>
 
