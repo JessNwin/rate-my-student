@@ -14,20 +14,20 @@ Describe the user stories designed for the project, including clear acceptance c
 
 ### US#1
 
-*As a user, I want to register on the online platform as a student or a professor so that I can log-in. Given that a user provides an ID number, name, email, password, major, department, and a small biography, user information is saved when the user clicks on the "Sign Up" button, and a user profile is created. When signup is successful, an authorized user can log-in with my email and password. If credentials are valid, I can access my reviews, search through a directory of other users and their ratings, create reviews, view my recommendations, and log out.*
+*As a user, I want to register on the online platform as a student or a professor so that I can log-in. Given that a user provides a name, email, password, and a small biography, user information is saved when the user clicks on the "Sign Up" button, and a user profile is created. When signup is successful, an authorized user can log-in with my Username and password. If credentials are valid, I can access my reviews, search other with a search bar, view other user profiles and their ratings, create reviews, view my recommendations, and log out.*
 
 Additional Information:
-* Student sign-up includes Id, name, major, email, biography, and password*
-* Professor sign-up includes Id, name, department, biography, email, password. *
+* Student sign-up includes name, email, biography, and password*
+* Professor sign-up includes name, biography, email, password. *
 * Professors will only display the reviews they have created."
 
 ### US#2 
 
-*As an authenticated user, from the homepage, I want to access a user directory to search for a professor or a student. I can select a user to view their information and stats. I can view essential details for each user such as their name, occupation (student/professor), a short bio, major/department, average review for different criteria, and a list of their reviews.* 
+*As an authenticated user, from the homepage, I can utilize a search bar to search for a professor or a student. I can select a user to view the user name, their overall rating, and reviews made for other students. I can view essential details for each user such as their name, occupation (student/professor), a short bio, and average review for different criteria, and a list of their reviews.* 
 
 Additional information:
 
-* Students will have a name, major, bio, and average reviews of different criteria. *
+* Students will have a name, biography, and average reviews of different criteria. *
 * Professors will have name, department, and bio. *
 * reviews displayed should only show the comment and review left. Users who left the review should remain anonymous. *
 
