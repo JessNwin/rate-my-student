@@ -35,3 +35,7 @@ class RatingForm(FlaskForm):
 class ReportForm(FlaskForm):
     report_description = TextAreaField('Report Reason', validators=[DataRequired()])
     submit = SubmitField('Submit Report')
+
+class RecommendationForm(FlaskForm):
+    description = TextAreaField('Rating Description', validators=[DataRequired()])
+    submit = SubmitField('Submit Recommendation')

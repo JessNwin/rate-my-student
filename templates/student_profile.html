@@ -23,6 +23,16 @@
         <a href="/rate_student/{{ student.id }}" class="btn">Rate Student</a>
     </p>
 </div>
+
+<!-- Display professor recommendations -->
+<div class="card">
+    <strong>Recommended by professors: </strong>
+        {% for recommendation in student.recommendations %}
+            <p>{{ recommendation.professor_recommendations.full_name }}</p>
+        {% endfor %}
+</div>
+
+
 <!-- Display user ratings -->
 {% for rating in student.ratings %}
 <div class="card-rating">
