@@ -59,7 +59,6 @@ class Recommendation(db.Model):
 ##add admin user
 class Administrator(User):
     __tablename__ = 'administrators'
-    id = db.Column(db.String, db.ForeignKey('users.id'), primary_key=True)
     reported_ratings = db.relationship('Report',
                                        foreign_keys='[Report.reporter_id]',  
                                        backref='reported_rating',
