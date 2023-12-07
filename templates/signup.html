@@ -9,6 +9,11 @@
             <p> Password: <br> {{ form.password }}</p>
             <p> Confirm Password: <br> {{ form.password_confirm }}</p>
             <input type="submit" class="btn" value="Submit">
+            <label for="{{ form.professor_check.id }}">Are you a professor?</label>
+            {{form.professor_check}}
+            <p>(leave box unchecked if you are a student)</p>
+            <p></p>
+            <input type="submit" value="Submit">
         </form>
     </div>
 {% endblock %}

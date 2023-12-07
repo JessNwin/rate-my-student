@@ -30,17 +30,17 @@ def users_signin():
         checkUser = load_user(userID)
         if checkUser == None:
             return ('<p>No user found</p>')
-        
 
         if bcrypt.checkpw(userPass, checkUser.password):
             login_user(checkUser)
             print("match")
             print("CurrentID: " + current_user.id)
-
+            
             return redirect('/users/search')
         else:
             return ('<p>Incorrect Password</p>')
     return render_template('signin.html', form=signInForm)
+
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_signup():
@@ -54,6 +54,12 @@ def users_signup():
         if existing_user:
             flash('User already exists, Please choose a different one', 'error')
             return redirect(url_for('users_signup'))
+        
+        #Check box handeling: If box is checked, change user type to professor
+        if signUp.professor_check.data == True:
+            userType = 'professor'
+        else: 
+            userType = 'student'
 
         if password == password_confirm:
             hashedPass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -61,7 +67,7 @@ def users_signup():
                            full_name=signUp.full_name.data,
                            email=signUp.email.data,
                            password=hashedPass,
-                           type='student')
+                           type=userType)
             db.session.add(newUser)
             db.session.commit()
             return redirect('/users/signin')
@@ -102,6 +108,8 @@ def search_suggestions():
 @app.route('/users/<userid>', methods=['GET', 'POST'])
 def user_profile(userid):
     targetUser = User.query.filter_by(id=userid).first()
+    print(f'Admin quiery: {Administrator.query.get(userid)}')
+    print(f'Target user: {targetUser.type}')
     if not targetUser:
         print("No user found with ID:", userid)
         return redirect(url_for('search_page'))
@@ -116,15 +124,16 @@ def user_profile(userid):
 
         print(average_rating)
         return render_template('student_profile.html', student=student, averagerating=average_rating)
+    
     elif targetUser.type == 'professor':
         # Handle professor profile
         professor = Professor.query.get(userid)
         print("Professor found:", professor.full_name)
-
         return render_template('professor_profile.html', professor=professor)
-    elif targetUser.type == 'administator':
+    
+    elif targetUser.type == 'administrator':
         # Handle administrator profile
-        administrator = Administrator.query.get(userid)
+        administrator = User.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population
         print("Administrator found:", administrator.full_name)
         return render_template('administrator_profile.html', administrator=administrator)
     else:
@@ -211,6 +220,29 @@ def reported_ratings():
     reported_ratings = db.session.query(Report, Rating).join(Rating).all()
     print(reported_ratings) 
     return render_template('reported_ratings.html', reported_ratings=reported_ratings)
+
+#This route allows the admin to review the original reported rating
+@app.route('/admin/reported_ratings/<rating_id><report_id>')
+def review_reported_ratings(rating_id, report_id):
+    reported_rating = db.session.query(Rating).filter_by(id=rating_id).first() 
+    return render_template('review_reported_ratings.html', rating_id=rating_id, report_id=report_id, reported_rating=reported_rating)
+
+#This route handles the action the admin chose to take. Either deleting the review or removing the report
+@app.route('/admin/reported_ratings/<rating_id><report_id>/<delete>')
+def reported_ratings_action(rating_id, report_id, delete):
+    if delete == 'rating':
+        ratingToDelete = db.session.query(Rating).filter_by(id=rating_id).first()
+        print(ratingToDelete)
+        db.session.delete(ratingToDelete)
+        db.session.commit()
+
+    elif delete == 'report':
+        reportToDelete = db.session.query(Report).filter_by(id=report_id).first()
+        print(reportToDelete)
+        db.session.delete(reportToDelete)
+        db.session.commit()
+
+    return redirect('/admin/reported_ratings')
 
 
 # this is the route for professor are able to recommend students
