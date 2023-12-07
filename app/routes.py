@@ -40,7 +40,6 @@ def users_signin():
         else:
             return ('<p>Incorrect Password</p>')
     return render_template('signin.html', form=signInForm)
-
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_signup():
