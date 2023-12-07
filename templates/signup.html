@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block main %}
 <div class="card-fit">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+        <ul>
+             {% for category, message in messages %}
+                <li{% if catergory == 'error' %} class="error"{% endif %}>{{ message }}</li>
+             {% endfor %}
+        </ul><br>
+        {% endif %}
+    {% endwith %}
         <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
             <p> Username: <br> {{ form.id }}</p>

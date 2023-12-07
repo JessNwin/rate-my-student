@@ -4,7 +4,7 @@ from sqlalchemy import func
 from app import app, db, load_user, makeTestUsers
 from app.models import User, Student, Professor, Recommendation, Rating, Report, Administrator
 from app.forms import RatingForm, SignUpForm, SignInForm, ReportForm
-from flask import flash, jsonify, render_template, redirect, url_for, request
+from flask import flash, get_flashed_messages, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
 
@@ -29,7 +29,8 @@ def users_signin():
 
         checkUser = load_user(userID)
         if checkUser == None:
-            return ('<p>No user found</p>')
+             flash('No user found', 'error')
+             return redirect(url_for('users_signin'))
 
         if bcrypt.checkpw(userPass, checkUser.password):
             login_user(checkUser)
@@ -38,7 +39,9 @@ def users_signin():
             
             return redirect('/users/search')
         else:
-            return ('<p>Incorrect Password</p>')
+            flash('Incorrect Password', 'error')
+            return redirect(url_for('users_signin'))
+        
     return render_template('signin.html', form=signInForm)
 
 # signup functionality
@@ -72,7 +75,8 @@ def users_signup():
             db.session.commit()
             return redirect('/users/signin')
         else:
-            return ('<p>Password didn\'t match confirmation</p>')
+            flash("Password didn't match confirmation", 'error')
+            return redirect(url_for('users_signup'))
         
     return render_template('signup.html', form=signUp)
 
@@ -143,6 +147,7 @@ def user_profile(userid):
 @app.route('/rate_student/<student_id>', methods=['GET', 'POST'])
 def rate_student(student_id):
     if student_id == current_user.id:
+
         # Redirect or show an error if the user tries to rate themselves
         flash('You cannot rate yourself.', 'error')
         return redirect(url_for('user_profile', userid=student_id))
@@ -152,6 +157,7 @@ def rate_student(student_id):
 
     existing_rating = Rating.query.filter_by(reviewer_id=current_user.id, student_id=student_id).first()
     if existing_rating:
+        
         # Redirect or show an error if the user has already rated this student
         flash('You have already rated this student.', 'error')
         return redirect(url_for('user_profile', userid=student_id))
@@ -204,8 +210,7 @@ def report_rating(rating_id):
 
         db.session.add(report)
         db.session.commit()
-        flash('Rating successfully Reported for Admin Review', 'success')
-
+        
         # Redirect to the student's profile page after submission
         rating = Rating.query.get(rating_id)
         return redirect(url_for('user_profile', userid=rating.student_id))
@@ -230,13 +235,13 @@ def review_reported_ratings(rating_id, report_id):
 def reported_ratings_action(rating_id, report_id, delete):
     if delete == 'rating':
         ratingToDelete = db.session.query(Rating).filter_by(id=rating_id).first()
-        print(ratingToDelete)
+        deletAssociatedReport = db.session.query(Report).filter_by(id=report_id).first()
+        db.session.delete(deletAssociatedReport)
         db.session.delete(ratingToDelete)
         db.session.commit()
 
     elif delete == 'report':
         reportToDelete = db.session.query(Report).filter_by(id=report_id).first()
-        print(reportToDelete)
         db.session.delete(reportToDelete)
         db.session.commit()
 
