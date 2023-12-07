@@ -47,10 +47,10 @@ def makeProfessors():
     db.session.add(newProfessor)
     db.session.commit()
 def makeAdmin():
-    newProfessor = User(id="admin",
+    newAdmin = User(id="admin",
                full_name="admin",
                email="admin@gmail.com",
                password=testPasswords,
                type='administrator')
-    db.session.add(newProfessor)
+    db.session.add(newAdmin)
     db.session.commit()

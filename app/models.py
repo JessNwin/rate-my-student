@@ -34,8 +34,7 @@ class Professor(User):
                                       foreign_keys='[Recommendation.professor_id]', 
                                       backref='professor_recommendations',  # professor backref name
                                       lazy=True)
-    #average_rating = db.Column(db.Float) #This was causing an error for some reason
-    
+
 class Rating(db.Model):
     __tablename__ = 'ratings'
     id = db.Column(db.Integer, primary_key=True)
