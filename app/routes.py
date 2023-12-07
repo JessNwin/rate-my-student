@@ -2,7 +2,7 @@
 
 from app import app, db, load_user
 from app.models import User, Student, Professor, Recommendation, Rating
-from app.forms import SignUpForm, SignInForm
+from app.forms import RatingForm, SignUpForm, SignInForm
 from flask import flash, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
@@ -36,7 +36,6 @@ def users_signin():
         else:
             return ('<p>Incorrect Password</p>')
     return render_template('signin.html', form=signInForm)
-
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
 def users_signup():
@@ -97,15 +96,75 @@ def search_suggestions():
 @login_required
 @app.route('/users/<userid>', methods=['GET', 'POST'])
 def user_profile(userid):
-    print("User ID:", userid)
     targetUser = User.query.filter_by(id=userid).first()
-    if targetUser.type == 'student':
-        print("Student found:", targetUser.full_name)
-        return render_template('student_profile.html', student=targetUser)
-    elif targetUser.type == 'professor':
-        print("Professor found:", targetUser.full_name)
-        return render_template('professor_profile.html', professor=targetUser)
-    else:
+    if not targetUser:
         print("No user found with ID:", userid)
         return redirect(url_for('search_page'))
 
+    if targetUser.type == 'student':
+        student = Student.query.get(userid)
+        total_rating = sum(rating.rating_overall for rating in student.ratings)
+        if student.ratings:
+            average_rating = "{:.2f}".format(total_rating / len(student.ratings))
+        else:
+            average_rating = "No Ratings"  # Default value when there are no ratings
+
+        print(average_rating)
+        return render_template('student_profile.html', student=student, averagerating=average_rating)
+    elif targetUser.type == 'professor':
+        # Handle professor profile
+        professor = Professor.query.get(userid)
+        print("Professor found:", professor.full_name)
+
+        return render_template('professor_profile.html', professor=professor)
+    else:
+        print("Unrecognized user type for ID:", userid)
+        return redirect(url_for('search_page'))
+
+@login_required
+@app.route('/rate_student/<student_id>', methods=['GET', 'POST'])
+def rate_student(student_id):
+    if student_id == current_user.id:
+        # Redirect or show an error if the user tries to rate themselves
+        flash('You cannot rate yourself.', 'error')
+        return redirect(url_for('user_profile', userid=student_id))
+
+    student = Student.query.get_or_404(student_id)
+    form = RatingForm()
+
+    existing_rating = Rating.query.filter_by(reviewer_id=current_user.id, student_id=student_id).first()
+    if existing_rating:
+        # Redirect or show an error if the user has already rated this student
+        flash('You have already rated this student.', 'error')
+        return redirect(url_for('user_profile', userid=student_id))
+
+    if form.validate_on_submit():
+        # Retrieve form data
+        rating_participation = float(form.rating_participation.data)
+        rating_communication = float(form.rating_communication.data)
+        rating_skill = float(form.rating_skill.data)
+        description = form.description.data
+
+        # Calculate overall rating
+        rating_overall = (rating_participation + rating_communication + rating_skill) / 3
+        rating_overall = float("{:.2f}".format(rating_overall))
+
+        # Create new Rating object
+        new_rating = Rating(
+            rating_overall=rating_overall,
+            rating_participation=rating_participation,
+            rating_communication=rating_communication,
+            rating_skill=rating_skill,
+            description=description,
+            reviewer_id=current_user.id, 
+            student_id=student_id
+        )
+
+        # Add new Rating to the database
+        db.session.add(new_rating)
+        db.session.commit()
+
+        # Redirect to the student's profile page after submission
+        return redirect(url_for('user_profile', userid=student_id))
+
+    return render_template('rate_student.html', form=form, student=student)

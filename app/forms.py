@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, DateField, SubmitField
+from wtforms import RadioField, StringField, PasswordField, TextAreaField, DateField, SubmitField
 from wtforms.validators import DataRequired
 
 class SignUpForm(FlaskForm):
@@ -14,3 +14,19 @@ class SignInForm(FlaskForm):
     id = StringField('Id', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Confirm')
+
+class RatingForm(FlaskForm):
+    rating_choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+
+    rating_participation = RadioField('Participation Rating', 
+                                      choices=rating_choices, 
+                                      validators=[DataRequired()])
+    rating_communication = RadioField('Communication Rating', 
+                                      choices=rating_choices, 
+                                      validators=[DataRequired()])
+    rating_skill = RadioField('Skill Rating', 
+                              choices=rating_choices, 
+                              validators=[DataRequired()])
+
+    description = TextAreaField('Review Description', validators=[DataRequired()])
+    submit = SubmitField('Submit Rating')

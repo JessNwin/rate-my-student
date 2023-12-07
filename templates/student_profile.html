@@ -1,33 +1,40 @@
-<!-- Display Student name
-    Display Student Average Rating
-    Display Student Ratings List
-     -->
-
 {% extends 'base.html' %}
 {% block main %}
 
-<h1 class="profile-title"> {{student.id}}'s Profile</h1>
+<h1 class="profile-title"> {{ student.id }}'s Profile</h1>
 
-<!-- Display student average rating -->
+<!-- Calculate and display student average rating -->
+{% if student.ratings|length > 0 %}
+    <tr>
+        <th>Average Rating: {{ averagerating }}</th>   
+    </tr>
+{% else %}
+    <tr>
+        <th>No ratings yet</th>
+    </tr>
+{% endif %}
 
-<tr>
-    {% for rating in student.ratings %}
-        {totalRating += student.ratings.rating_overall}
-    {%endfor%}
-    <th>Ratings: {{totalRating}}</th>   
-
-</tr>
-<!-- Display user ratings in order of rating -> attribute ratings -> description -->
+<p>
+<!-- Display user ratings -->
 {% for rating in student.ratings %}
-    {% if loop.index % 2 == 0 %}
-        <tr class="even_row">
-    {% else %}
-        <tr class="odd_row">
-    {% endif %}
-        <td> {{rating.description}} </td>
+    <tr class="{{ 'even_row' if loop.index % 2 == 0 else 'odd_row' }}">
+        <td>
+            Overall Rating: 
+            {{ rating.rating_overall }}
+        </td>
+        <br>
+        <td>
+             Description:
+             {{ rating.description }}
+        </td>
         <td>     
             <button type="button">Report</button>
         </td>
     </tr>
+    <p></p>
 {% endfor %}
+
+<!-- Add button to rate this student -->
+<a href="/rate_student/{{ student.id }}" class="button">Rate Student</a>
+</p>
 {% endblock %}
