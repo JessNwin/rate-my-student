@@ -7,12 +7,18 @@
         <li>
           <strong>Reporter ID:</strong> {{ report.reporter_id }}<br>
           <strong>Rating ID:</strong> {{ rating.id }}<br>
-          <strong>Description:</strong> {{ report.description }}
+          <strong>Description:</strong> {{ report.description }}<br>
+          <button type="button" class="button" onclick=simple_action("{{ url_for( 'review_reported_ratings', rating_id=rating.id, report_id=report.id ) }}")>View reported rating</button>
         </li>
+        <br>
       {% endfor %}
     </ul>
   {% else %}
     <p>No reported ratings.</p>
   {% endif %}
+  <script type="text/javascript">
+    function simple_action(target) {
+        window.location = target
+    }
+  </script>
 {% endblock %}
-
