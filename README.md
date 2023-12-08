@@ -91,6 +91,13 @@ Share in this section the results of the tests performed to attest to the qualit
 
 The final product must demonstrate the integrity of at least 5 of the 6 planned user stories. The final product must be packaged in the form of a docker image. In this section, describe the steps needed to generate that image so that others can deploy the product themselves. All files required for the deployment must be available, including the docker file, source/binary code, external package requirements, data files, images, etc. Instructions on how to create a container from the docker image with parameters such as port mapping, environment variables settings, etc., must be described (if needed). 
 
+## whitebox testing
+![](images/whiteboxtest.png)
+
+## blackbox testing
+![](images/blackboxtest.png)
+This report ran on mac OS. The system does not run fully on Mac. Sent videos. 
+
 ##Run the image 
 ...
 flask run -h 0.0.0.0 --port 5001

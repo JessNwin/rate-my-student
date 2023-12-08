@@ -192,21 +192,20 @@ Participants: Jessica, Jacqueline, Ben, Vincent, Luis
 Notes...
 Vincent debugged what he calls the "lil rats" programmed. Ben completed US#6. Jessica completed containerization. Luis is still working on whitebox testing. Vincent debugged what he calls the "lil rats" programmed. Ben completed US#6. Jessica completed containerization. Luis is still working on whitebox testing. 
 
-
 # Sprint Review
 Date/Time: 12/07/2023
 
-Participants: 
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Applied frontend to ratemystudent, debug, add professor functualities, and admin functualities. Completed testing, however blackbox testing only worked on windows OS and would not work on mac OS. 
+Mac os gave an error "WARNING: This is a development server. Do not use it in a production deployment.
+Use a production WSGI server instead". Sent a video message to product owner Mr. T. Still trying to figure it out.
+
+# Sprint Retrospective
+This sprint was the most productive. Communication and participation was amazing. 
 
 
-# Sprint Review
-Date/Time: 
-
-Participants: 
-
-Notes...
 
 
 
