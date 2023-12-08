@@ -4,6 +4,8 @@ from sqlalchemy import func
 from app import app, db, load_user, makeTestUsers
 from app.models import User, Student, Professor, Recommendation, Rating, Report, Administrator
 from app.forms import RatingForm, SignUpForm, SignInForm, ReportForm
+from flask import flash, get_flashed_messages, jsonify, render_template, redirect, url_for, request
+from app.forms import RatingForm, RecommendationForm, SignUpForm, SignInForm, ReportForm
 from flask import flash, jsonify, render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
@@ -24,12 +26,13 @@ def users_signin():
     signInForm = SignInForm()
 
     if signInForm.validate_on_submit():
-        userID = signInForm.id.data
+        userID = signInForm.id.data.lower()
         userPass = signInForm.password.data.encode('utf-8')
 
         checkUser = load_user(userID)
         if checkUser == None:
-            return ('<p>No user found</p>')
+             flash('No user found', 'error')
+             return redirect(url_for('users_signin'))
 
         if bcrypt.checkpw(userPass, checkUser.password):
             login_user(checkUser)
@@ -38,7 +41,9 @@ def users_signin():
             
             return redirect('/users/search')
         else:
-            return ('<p>Incorrect Password</p>')
+            flash('Incorrect Password', 'error')
+            return redirect(url_for('users_signin'))
+        
     return render_template('signin.html', form=signInForm)
 # signup functionality
 @app.route('/users/signup', methods=['GET', 'POST'])
@@ -62,7 +67,7 @@ def users_signup():
 
         if password == password_confirm:
             hashedPass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            newUser = User(id=signUp.id.data,
+            newUser = User(id=signUp.id.data.lower(),
                            full_name=signUp.full_name.data,
                            email=signUp.email.data,
                            password=hashedPass,
@@ -71,7 +76,8 @@ def users_signup():
             db.session.commit()
             return redirect('/users/signin')
         else:
-            return ('<p>Password didn\'t match confirmation</p>')
+            flash("Password didn't match confirmation", 'error')
+            return redirect(url_for('users_signup'))
         
     return render_template('signup.html', form=signUp)
 
@@ -107,8 +113,7 @@ def search_suggestions():
 @app.route('/users/<userid>', methods=['GET', 'POST'])
 def user_profile(userid):
     targetUser = User.query.filter_by(id=userid).first()
-    print(f'Admin quiery: {Administrator.query.get(userid)}')
-    print(f'Target user: {targetUser.type}')
+
     if not targetUser:
         print("No user found with ID:", userid)
         return redirect(url_for('search_page'))
@@ -117,24 +122,24 @@ def user_profile(userid):
         student = Student.query.get(userid)
         total_rating = sum(rating.rating_overall for rating in student.ratings)
         if student.ratings:
-            average_rating = "{:.2f}".format(total_rating / len(student.ratings))
+            average_rating = total_rating / len(student.ratings)
         else:
-            average_rating = "No Ratings"  # Default value when there are no ratings
+            average_rating = 0  # Default value when there are no ratings
 
         print(average_rating)
-        return render_template('student_profile.html', student=student, averagerating=average_rating)
+        print(student.recommendations)
 
+        return render_template('student_profile.html', student=student, averagerating=average_rating, )
+    
     elif targetUser.type == 'professor':
         # Handle professor profile
         professor = Professor.query.get(userid)
         print("Professor found:", professor.full_name)
-
-        return render_template('professor_profile.html', professor=professor)
-    elif targetUser.type == 'administrator':
-        # Handle administrator profile
-        administrator = User.query.get(userid) #Changed this from Administrator.query() ->  User.query() because the administrator table is not population
-        print("Administrator found:", administrator.full_name)
-        return render_template('administrator_profile.html', administrator=administrator)
+        print(professor.recommendations)
+        return render_template('professor_profile.html', professor=professor, professor_recommendations=professor.recommendations)
+    
+    elif targetUser.type == 'administrator' and current_user.type == 'administrator':
+        return redirect(url_for('reported_ratings'))
     else:
         print("Unrecognized user type for ID:", userid)
         return redirect(url_for('search_page'))
@@ -143,6 +148,7 @@ def user_profile(userid):
 @app.route('/rate_student/<student_id>', methods=['GET', 'POST'])
 def rate_student(student_id):
     if student_id == current_user.id:
+
         # Redirect or show an error if the user tries to rate themselves
         flash('You cannot rate yourself.', 'error')
         return redirect(url_for('user_profile', userid=student_id))
@@ -152,6 +158,7 @@ def rate_student(student_id):
 
     existing_rating = Rating.query.filter_by(reviewer_id=current_user.id, student_id=student_id).first()
     if existing_rating:
+        
         # Redirect or show an error if the user has already rated this student
         flash('You have already rated this student.', 'error')
         return redirect(url_for('user_profile', userid=student_id))
@@ -188,7 +195,6 @@ def rate_student(student_id):
     return render_template('rate_student.html', form=form, student=student)
 
 
-
 # Report functionality
 @login_required
 @app.route('/report_rating/<int:rating_id>', methods=['GET', 'POST'])
@@ -205,8 +211,7 @@ def report_rating(rating_id):
 
         db.session.add(report)
         db.session.commit()
-        flash('Rating successfully Reported for Admin Review', 'success')
-
+        
         # Redirect to the student's profile page after submission
         rating = Rating.query.get(rating_id)
         return redirect(url_for('user_profile', userid=rating.student_id))
@@ -216,6 +221,8 @@ def report_rating(rating_id):
 # View reported ratings functionality
 @app.route('/admin/reported_ratings')
 def reported_ratings():
+    if current_user.type != 'administrator':
+        return redirect(url_for('search_page'))
     reported_ratings = db.session.query(Report, Rating).join(Rating).all()
     print(reported_ratings) 
     return render_template('reported_ratings.html', reported_ratings=reported_ratings)
@@ -231,13 +238,13 @@ def review_reported_ratings(rating_id, report_id):
 def reported_ratings_action(rating_id, report_id, delete):
     if delete == 'rating':
         ratingToDelete = db.session.query(Rating).filter_by(id=rating_id).first()
-        print(ratingToDelete)
+        deletAssociatedReport = db.session.query(Report).filter_by(id=report_id).first()
+        db.session.delete(deletAssociatedReport)
         db.session.delete(ratingToDelete)
         db.session.commit()
 
     elif delete == 'report':
         reportToDelete = db.session.query(Report).filter_by(id=report_id).first()
-        print(reportToDelete)
         db.session.delete(reportToDelete)
         db.session.commit()
 
@@ -245,34 +252,28 @@ def reported_ratings_action(rating_id, report_id, delete):
 
 
 # this is the route for professor are able to recommend students
-@app.route('/recommend/<student_id>', methods=['POST'])
+@app.route('/recommend/<student_id>', methods=['GET','POST'])
 @login_required
 def recommend_student(student_id):
-    if current_user.type == 'professor':
-        description = request.form.get('recommendation_description')
-        recommendation = Recommendation(professor_id=current_user.id, student_id=student_id, description=description)
-        db.session.add(recommendation)
+    if current_user.type != 'professor':
+        return redirect(url_for('/users/search')) 
+
+    form = RecommendationForm()
+    existing_recommendation = Recommendation.query.filter_by(professor_id=current_user.id, student_id=student_id).first()
+
+    if existing_recommendation:
+        return redirect(url_for('user_profile', userid=student_id))
+
+    if form.validate_on_submit():
+        new_recommendation = Recommendation(
+            professor_id=current_user.id, 
+            student_id=student_id, 
+            description=form.description.data
+        )
+        db.session.add(new_recommendation)
         db.session.commit()
-        flash('Recommendation submitted successfully', 'success')
-        return redirect(url_for('professor_profile'))
-    else:
-        return "ACCESS DENIED"
+        return redirect(url_for('user_profile', userid=student_id))
 
-# this is the route to try to include the list of top-rated students
-@app.route('/professor/home', methods=['GET'])
-@login_required
-def professor_home():
-    if current_user.type == 'professor':
-        # Calculate the average rating for each student
-        students = Student.query.all()
-        for student in students:
-            avg_rating = db.session.query(func.avg(Rating.rating_overall)).filter_by(student_id=student.id).scalar()
-            student.average_rating = avg_rating if avg_rating else 0.0
+    return render_template("recommend.html", form=form, student=Student.query.filter_by(id=student_id).first())
 
-        # Get the top 5 students based on average rating
-        top_students = Student.query.order_by(Student.average_rating.desc()).limit(5).all()
-
-        return render_template('professor_profile.html', top_students=top_students)
-    else:
-        return "Access Denied"
 

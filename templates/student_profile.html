@@ -1,44 +1,71 @@
 {% extends 'base.html' %}
 {% block main %}
-
-
-<h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
-
-
-<!-- Calculate and display student average rating -->
+<div class="card">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li{% if catergory == 'error' %} class="error"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul><br>
+        {% endif %}
+    {% endwith %}
+    
+    <!-- Calculate and display student average rating -->
+    <div class="card-centered">
+    <h1 class="profile-title"> {{ student.full_name }}'s Profile</h1>
 {% if student.ratings|length > 0 %}
     <tr>
         <th>Average Rating: {{ averagerating }}</th>   
     </tr>
 {% else %}
-    <tr>
+<tr>
         <th>No ratings yet</th>
     </tr>
-{% endif %}
+    {% endif %}
+    <div class="rating-progress">
+        <div class="progress-bar" style="width: {{ averagerating / 5 * 100 }}%;"></div>
+    </div>
+    
+    <p>
+        <!-- Add button to rate this student -->
+        <a href="/rate_student/{{ student.id }}" class="btn">Rate Student</a>
+    </p>
+    <!-- Conditional button for professors -->
+    {% if current_user.type == 'professor' %}
+    <div>
+        <a href="/recommend/{{ student.id }}" class="btn">Recommend this Student</a>
+    </div>
+    {% endif %}
+</div>
 
-<p>
+<!-- Display professor recommendations -->
+<div class="card">
+    <strong>Recommended by professors: </strong>
+        {% for recommendation in student.recommendations %}
+            <a href="/users/{{ recommendation.professor_recommendations.id }}" class="btn2">{{ recommendation.professor_recommendations.full_name }}</a>
+        {% endfor %}
+</div>
+
+
 <!-- Display user ratings -->
 {% for rating in student.ratings %}
-    <tr class="{{ 'even_row' if loop.index % 2 == 0 else 'odd_row' }}">
-        <td>
-            Overall Rating: 
-            {{ rating.rating_overall }}
-        </td>
-        <br>
-        <td>
-             Description:
-             {{ rating.description }}
-        </td>
-        <td>
-            <form action="/report_rating/{{ rating.id }}" method="post">
-                <button type="submit">Report Rating</button>
-            </form>
-        </td>
-    </tr>
-    <p></p>
+<div class="card-rating">
+    <div class="card">
+        <div class="rating-details">
+            <p><strong>Overall Rating:</strong> {{ rating.rating_overall }}</p>
+            <p><strong>Participation Rating:</strong> {{ rating.rating_participation }}</p>
+            <p><strong>Skill Rating:</strong> {{ rating.rating_skill }}</p>
+            <p><strong>Communication Rating:</strong> {{ rating.rating_communication }}</p>
+        </div>
+    </div>
+    <div class="rating-description">
+        <p><strong>Description:</strong> {{ rating.description }}</p>
+    </div>
+    <form action="/report_rating/{{ rating.id }}" method="post" class="report-form">
+        <button type="submit" class="btn2">Report Rating</button>
+    </form>
+</div>
 {% endfor %}
-
-<!-- Add button to rate this student -->
-<a href="/rate_student/{{ student.id }}" class="button">Rate Student</a>
-</p>
+</div>
 {% endblock %}

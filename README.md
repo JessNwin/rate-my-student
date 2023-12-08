@@ -14,45 +14,44 @@ Describe the user stories designed for the project, including clear acceptance c
 
 ### US#1
 
-*As a user, I want to register on the online platform as a student or a professor so that I can log-in. Given that a user provides a name, email, password, and a small biography, user information is saved when the user clicks on the "Sign Up" button, and a user profile is created. When signup is successful, an authorized user can log-in with my Username and password. If credentials are valid, I can access my reviews, search other with a search bar, view other user profiles and their ratings, create reviews, view my recommendations, and log out.*
+*As a user, I want to register on the online platform as a student or a professor so that I can log-in. Given that a user provides a username, full name, email, and password, user information is saved when the user clicks on the "Sign Up" button, and a user profile is created. When signup is successful, an authorized user can log-in with my Username and password. If credentials are valid, I can access my reviews, search other with a search bar, view other user profiles and their ratings, create reviews, view my recommendations, and log out.*
 
 Additional Information:
-* Student sign-up includes name, email, biography, and password*
-* Professor sign-up includes name, biography, email, password. *
-* Professors will only display the reviews they have created."
+* Student sign-up includes username, name, email, and password*
+* Professor sign-up includes username, name, email, password. *
+* Professors will only display the recommendations they have created."
 
 ### US#2 
 
-*As an authenticated user, from the homepage, I can utilize a search bar to search for a professor or a student. I can select a user to view the user name, their overall rating, and reviews made for other students. I can view essential details for each user such as their name, occupation (student/professor), a short bio, and average review for different criteria, and a list of their reviews.* 
+*As an authenticated user, from the homepage, I can utilize a search bar to search for a professor or a student. I can select a user to view the user name, their overall rating, and reviews made for other students. I can view essential details for each user such as their name, average rating, and a list of their reviews.* 
 
 Additional information:
 
-* Students will have a name, biography, and average reviews of different criteria. *
-* Professors will have name, department, and bio. *
+* Students will have a name, and average reviews of different criteria. *
+* Professors will have name, and a list of recommended students. *
 * reviews displayed should only show the comment and review left. Users who left the review should remain anonymous. *
 
 ### US#3 
-*As an authorized user, I can leave a review when I access another user's review page. When the user clicks the "Review" button, the user will be directed to create a review. If the subject being reviewed is a professor, the user will be directed to ratemyprofessor.com. If the review is for a student, the user will be redirected to a form to rate students based on mastery of subject matter, communication, participation, and leave a comment. The user will click the "submit button" when the review is complete. The student being reviewed will update to include the new review made and will display on their profile. Upon submission, individual criteria and overall average will be recalculated and updated.*
+*As a student, I can leave a single review when I access another user's review page. When I click the "Review" button, I will be directed to create a review. If the review is for a student, the user will be redirected to a form to rate students based on mastery of subject mastery, communication, participation, and leave a comment. The user will click the "submit button" when the review is complete. The student being reviewed will update to include the new review made and will display on their profile. Upon submission, individual criteria and overall average will be recalculated and updated.*
 
 Additional Information: 
 * Students will have a review form. *
-* Professors will be redirected to ratemyprofessor.com *
 * The criteria will be on a scale of 1-5. *
 
 ### US#4 
 
-*As a student, I can access a list of the reviews that my cohort has made for me. I can select the review and click the "Report" button. Upon reporting, the flagged review will be made available to the admin for investigation.*
+*As a student, I can access a list of the reviews that my cohort has made for me. These reviews will contribute to the overall rating on my profile. I can select the review and click the "Report" button. Upon reporting, the flagged review will be made available to the admin for investigation.*
 
 Additional information: 
 * Flagged review will be added to the Admin list of flagged reports. *
 
 ### US#5 
 
-*As a professor, I can recommend a student for academic opportunities. I can access a list of  5 students with the highest reviews from my home page to gain insight into potential candidates. I can access a list of users from a directory. When I select a user, I can click the "recommend" button. Upon recommendation, the student recommendation list will be updated, and a message will be sent to the student. Students will have the ability to access messages from their home page.*
+*As a professor, I can recommend a student for academic opportunities. When I select a user, I can click the "recommend" button, and give a description for why I'd like to recommend the student. Upon recommendation, the student recommendation list on my profile will be updated, and a recommendation will show up on the student's profile. Students will have the ability to click on their recommendation to go to my profile.*
 
 ### US#6
 
-*As an admin, I will have a list of flagged reviews for investigation on my homepage. I can modify or delete flagged reviews. I can also warn a user for using inappropriate language and behavior. I can select the user involved, and upon clicking "Send Warning," the user will have a warning sent to their message page.*
+*As an admin, I will have a list of flagged reviews for investigation on my profile. Upon review, I can choose to either remove the report, or remove the reported rating with the click of a button. Removing a rating will delete it from the profile that it was posted on.*
 
 
 ## Model 
@@ -91,6 +90,13 @@ Share in this section the results of the tests performed to attest to the qualit
 # Deployment 
 
 The final product must demonstrate the integrity of at least 5 of the 6 planned user stories. The final product must be packaged in the form of a docker image. In this section, describe the steps needed to generate that image so that others can deploy the product themselves. All files required for the deployment must be available, including the docker file, source/binary code, external package requirements, data files, images, etc. Instructions on how to create a container from the docker image with parameters such as port mapping, environment variables settings, etc., must be described (if needed). 
+
+## whitebox testing
+![](images/whiteboxtest.png)
+
+## blackbox testing
+![](images/blackboxtest.png)
+This report ran on mac OS. The system does not run fully on Mac. Sent videos. 
 
 ##Run the image 
 ...

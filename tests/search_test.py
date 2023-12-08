@@ -9,8 +9,11 @@ sys.path.insert(0, project_root)
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 from app import app, db
 from app.models import User
+from app import makeTestUsers 
 
 class SearchTest(unittest.TestCase):
 
@@ -20,64 +23,48 @@ class SearchTest(unittest.TestCase):
         self.browser.get('http://localhost:5000/')
 
     def testSucessfulSearch(self):
-        #Test user:usename = test, password = 1 
-
+        #Test user: usename = test, password = 1 
         with app.app_context():
-            existing_user = db.session.query(User).filter_by(id='test').first()
-
-            #If there is a test user already in the database, one is not created
-            if existing_user != None:
-                signinButton = self.browser.find_elements(By.TAG_NAME, 'button')[1]
-                signinButton.click()
-
-            #This creates a test user if there is not already one in the database
-            if existing_user is None:
-                signupButton = self.browser.find_elements(By.TAG_NAME, 'button')[0]
-                signupButton.click()
-                id = self.browser.find_element(By.ID, 'id')
-                self.assertIsNotNone(id)
-                id.send_keys('test')
-
-                name = self.browser.find_element(By.ID, 'full_name')
-                self.assertIsNotNone(name)
-                name.send_keys('test')
-
-                passwd = self.browser.find_element(By.ID, 'password')
-                self.assertIsNotNone(passwd)
-                passwd.send_keys('1')
-
-                confirmPasswd = self.browser.find_element(By.ID, 'password_confirm')
-                self.assertIsNotNone(confirmPasswd)
-                confirmPasswd.send_keys('1')
-
-                submit = self.browser.find_element(By.XPATH, '//input[@type="submit"]') 
-                submit.click()
-
+            query = User.query.filter_by(id='test').first()
+            if query is None:
+                makeTestUsers.makeTestUser()
+            
             #Signin the test user
+            signinButton = self.browser.find_elements(By.TAG_NAME, 'button')[1]
+            wait = WebDriverWait(self.browser, 2)
+            signinButton = wait.until(expected_conditions.element_to_be_clickable(signinButton))
+            signinButton.click()
+            
             id = self.browser.find_element(By.ID, 'id')
+            id = wait.until(expected_conditions.presence_of_element_located((By.ID, 'id')))
             self.assertIsNotNone(id)
             id.send_keys('test')     
 
             password = self.browser.find_element(By.ID, 'password')
+            password = wait.until(expected_conditions.presence_of_element_located((By.ID, 'password')))
             self.assertIsNotNone(password)
             password.send_keys('1')
 
             submit = self.browser.find_element(By.XPATH, '//input[@type="submit"]') 
+            submit = wait.until(expected_conditions.presence_of_element_located((By.XPATH, '//input[@type="submit"]')))
             submit.click()
 
             #Test Search Functionality 
             search = self.browser.find_element(By.ID, 'search-input')
+            search = wait.until(expected_conditions.presence_of_element_located((By.ID, 'search-input')))
             self.assertIsNotNone(search)
             search.send_keys('test')
 
-            # waits for two seconds so the search suggestion has time to appear
-            self.browser.implicitly_wait(2)
-
+            # waits for 10 seconds so the search suggestion has time to appear
+            first_suggestion = wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, '#suggestions-container div')))
             first_suggestion = self.browser.find_element(By.CSS_SELECTOR, '#suggestions-container div')
             first_suggestion.click()
-
+            
             page = self.browser.current_url
             self.assertEqual('http://localhost:5000/users/test', page)
-
+            removeTestUser = User.query.filter_by(id='test').first()
+            db.session.delete(removeTestUser)
+            db.session.commit()
+            
 if __name__ == '__main__':
     unittest.main()   

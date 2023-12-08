@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="card">
+<div class="card-fit">
     <p>
         <h1>Please choose an option:</h1>
     </p>
     
-    <button type="button" onclick=simple_action("{{ url_for('users_signup') }}")>Sign Up</button>
-    <button type="button" onclick=simple_action("{{ url_for('users_signin') }}")>Sign in</button>
+    <button type="button" class="btn" onclick=simple_action("{{ url_for('users_signup') }}")>Sign Up</button>
+    <button type="button" class="btn" onclick=simple_action("{{ url_for('users_signin') }}")>Sign in</button>
 </div>
     <script type="text/javascript">
         function simple_action(target) {

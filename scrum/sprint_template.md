@@ -145,58 +145,67 @@ Vincent will finish US#3. Jacqueline will work on US#4. Luis will work on US#5. 
 Ben and Luis will finish testing. Jessica is going to research containerization and deployment. Jacqueline
 will continue to update the scrum notes and Jira board. 
 
-
 # Daily Scrums
 
-## 
-Participants:
+## 12/01/202312/01/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis  Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Jessica found out containerization can happen before coding is complete. 
+Jessica found out containerization can happen before coding is complete. 
 
-
-## 
-Participants:
-
-Notes...
-
-
-## 
-Participants:
+## 12/02/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Vincent completed US#3. We're going to create a backend and frontend branch from Dev.
 
+## 12/03/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
+Vincent completed US#3. We're going to create a backend and frontend branch from Dev.
 
-## 
-Participants:
+## 12/03/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
+
 
 Notes...
+Jacquline will work on US#4, Luis will do US#5, Ben will do US#6.
+Jacquline will work on US#4, Luis will do US#5, Ben will do US#6.
 
 
-## 
-Participants:
-
-Notes...
- 
-
-## 
-Participants:
+## 12/04/202312/04/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis  Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+US #4 is complete. Jacqueline couldn't test the code because the search function was giving internal server error. Ben will jump in and try to assist. 
+US #4 is complete. Jacqueline couldn't test the code because the search function was giving internal server error. Ben will jump in and try to assist. 
 
-
-## 
-Participants:
+## 12/05/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
+Luis completed US#5. Ben fixed a line in the administrator model. Luis was also encountering the the internal server error. Vincent and Ben will debug. 
 
+## 12/06/2023
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
+
+Notes...
+Vincent debugged what he calls the "lil rats" programmed. Ben completed US#6. Jessica completed containerization. Luis is still working on whitebox testing. Vincent debugged what he calls the "lil rats" programmed. Ben completed US#6. Jessica completed containerization. Luis is still working on whitebox testing. 
 
 # Sprint Review
-Date/Time: 
+Date/Time: 12/07/2023
 
-Participants: 
+Participants: Jessica, Jacqueline, Ben, Vincent, Luis 
 
 Notes...
-
+Applied frontend to ratemystudent, debug, add professor functualities, and admin functualities. Completed testing, however blackbox testing only worked on windows OS and would not work on mac OS. 
+Mac os gave an error "WARNING: This is a development server. Do not use it in a production deployment.
+Use a production WSGI server instead". Sent a video message to product owner Mr. T. Still trying to figure it out.
 
 # Sprint Retrospective
+This sprint was the most productive. Communication and participation was amazing. 
+
+
+
+
 

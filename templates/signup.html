@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block main %}
-<div class="card">
+<div class="card-fit">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+        <ul>
+             {% for category, message in messages %}
+                <li{% if catergory == 'error' %} class="error"{% endif %}>{{ message }}</li>
+             {% endfor %}
+        </ul><br>
+        {% endif %}
+    {% endwith %}
         <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
             <p> Username: <br> {{ form.id }}</p>
@@ -11,8 +20,8 @@
             <label for="{{ form.professor_check.id }}">Are you a professor?</label>
             {{form.professor_check}}
             <p>(leave box unchecked if you are a student)</p>
+            <input type="submit" class="btn" value="Submit">
             <p></p>
-            <input type="submit" value="Submit">
         </form>
     </div>
 {% endblock %}

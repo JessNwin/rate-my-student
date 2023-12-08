@@ -1,47 +1,29 @@
 {% extends 'base.html' %}
+
 {% block main %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search Page</title>
-    <style> 
-        /* TODO: Replace the style with CSS,
-            figure out how to style search suggestions */
-        #search-bar-container {
-            text-align: center;
-            margin-top: 20%;
-        }
-
-        #search-input {
-            width: 50%;
-            padding: 10px;
-            margin-right: 10px;
-        }
-
-        #search-button {
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
-
+<div class="card-fit">
+    <h1 class="profile-title">Profile Search:</h1>
+    <div class="profile-title">Find a Student or Professor</div>
     <div id="search-bar-container">
         <form action="/search" method="get">
-            <input type="text" id="search-input" name="query" placeholder="Enter search term...">
+            <input type="text" id="search-input" name="query" placeholder="Enter Name...">
         </form>
         <div id="suggestions-container"></div>
     </div>
+</div>
+<script>
 
-    <script>
-    document.getElementById('search-input').addEventListener('input', function() {
-        var searchQuery = this.value;
+document.getElementById('search-input').addEventListener('input', function() {
+    var searchQuery = this.value;
+    var suggestionsContainer = document.getElementById('suggestions-container');
 
+    if (searchQuery.length === 0) {
+        suggestionsContainer.style.display = 'none';
+    } else {
         fetch('/search-suggestions?q=' + encodeURIComponent(searchQuery))
             .then(response => response.json())
             .then(suggestions => {
-                var suggestionsContainer = document.getElementById('suggestions-container');
                 suggestionsContainer.innerHTML = '';
-
                 suggestions.forEach(function(suggestion) {
                     var div = document.createElement('div');
                     div.innerText = suggestion.name;  // 'name' is a property of the suggestion object
@@ -50,9 +32,13 @@
                     });
                     suggestionsContainer.appendChild(div);
                 });
+                if (suggestions.length > 0) {
+                    suggestionsContainer.style.display = 'block';
+                }
             });
+        }
     });
-    </script>
-</body>
-</html>
+
+
+</script>
 {% endblock %}
